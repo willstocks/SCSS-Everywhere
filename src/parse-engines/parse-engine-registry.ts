@@ -1,5 +1,6 @@
 import IParseEngine from "./common/parse-engine";
 import CssParseEngine from "./types/css-parse-engine";
+import ScssParseEngine from "./types/scss-parse-engine";
 import HtmlParseEngine from "./types/html-parse-engine";
 
 class ParseEngineRegistry {
@@ -25,6 +26,7 @@ class ParseEngineRegistry {
     private static languagesIds: string[];
     private static registry: IParseEngine[] = [
         new CssParseEngine(),
+        new ScssParseEngine(),
         new HtmlParseEngine(),
     ];
 }
