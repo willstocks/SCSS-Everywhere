@@ -1,4 +1,6 @@
-# IntelliSense for CSS class names in HTML
+# IntelliSense for CSS,SCSS class names in HTML and Slim
+
+> Note: This is drop-in replacement for https://github.com/zignd/HTML-CSS-Class-Completion
 
 A Visual Studio Code extension that provides CSS class name completion for the HTML `class` attribute based on the definitions found in your workspace or external files referenced through the `link` element.
 

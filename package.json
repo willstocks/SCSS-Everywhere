@@ -1,14 +1,17 @@
 {
-  "name": "html-css-class-completion",
-  "displayName": "IntelliSense for CSS class names in HTML",
-  "description": "CSS class name completion for the HTML class attribute based on the definitions found in your workspace.",
-  "version": "1.17.1",
-  "publisher": "Zignd",
+  "name": "html-slim-scss-css-class-completion",
+  "displayName": "IntelliSense for CSS, SCSS class names in HTML and Slim",
+  "description": "CSS and SCSS class name completion for the HTML and Slim class attribute based on the definitions found in your workspace.",
+  "version": "1.0.0",
+  "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"
   },
   "keywords": [
     "html",
+    "slim",
+    "scss",
+    "sass",
     "css",
     "class",
     "autocomplete",
@@ -34,7 +37,7 @@
         "properties": {
           "html-css-class-completion.includeGlobPattern": {
             "type": "string",
-            "default": "**/*.{css,html}",
+            "default": "**/*.{css,scss,sass,html}",
             "description": "A glob pattern that defines files and folders to search for. The glob pattern will be matched against the paths of resulting matches relative to their workspace."
           },
           "html-css-class-completion.excludeGlobPattern": {
@@ -53,7 +56,7 @@
   },
   "icon": "images/icon.png",
   "repository": {
-    "url": "https://github.com/Zignd/HTML-CSS-Class-Completion"
+    "url": "https://github.com/gencer/HTML-Slim-CSS-SCSS-Class-Completion"
   },
   "main": "./out/src/extension",
   "scripts": {
