@@ -6,7 +6,7 @@
 
 I've added Slim (Another Ruby Template Engine) support and also added SCSS/SASS support.
 
-When you work on Slim, whenever you press dot, it will show you all class name. Addition to that also `class=""` is supported.
+When you work on `.slim`, whenever you press `.` *dot*, it will show you all relative class names. Addition to that also `class=""` tags are supported.
 
 For SCSS part, I have manually strip comments and do regexp on code. In this way I also able to locate magic methods/classes. For example; If you have `.u-pb-{class}` this extension will show you `.u-pb-` and leave it `class` name filled by you.
 
@@ -14,7 +14,7 @@ For SCSS part, I have manually strip comments and do regexp on code. In this way
 
 There are few tools out there to export SCSS AST Format. However, they need to get main scss file to built it. This was a show-stopper for me. See, I don't want to build whole package everytime. That's why I partially handle SCSS files one-by-one. But faster. Try yourself.
 
-If you find any other way of implementing this, don't stop. this is open sourced extension. Contribute.
+If you find any other way of implementing this, don't stop, this is open sourced extension. Contribute.
 
 # Original Extension README
 

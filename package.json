@@ -11,11 +11,8 @@
     "html",
     "slim",
     "scss",
-    "sass",
     "css",
-    "class",
-    "autocomplete",
-    "multi-root ready"
+    "autocomplete"
   ],
   "categories": [
     "Languages",
