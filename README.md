@@ -1,8 +1,8 @@
 # IntelliSense for CSS, SCSS class names in HTML and Slim
 
-> Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Othwerwise, things can happen.
+> Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Otherwise, things can happen.
 
-## What' New in this extension?
+## What's new in this extension?
 
 I've added Slim (Another Ruby Template Engine) support and also added SCSS/SASS support.
 
