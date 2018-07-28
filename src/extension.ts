@@ -70,7 +70,7 @@ async function cache(): Promise<void> {
         console.log(failedLogsCount, "failed attempts to parse. List of the documents:");
         console.log(failedLogs);
 
-        notifier.notify("zap", "CSS classes cached (click to cache again)");
+        notifier.notify("zap", "CSS/SCSS classes cached (click to cache again)");
     } catch (err) {
         notifier.notify("alert", "Failed to cache the CSS classes in the workspace (click for another attempt)");
         throw new VError(err,
@@ -88,7 +88,9 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
 
             // Check if the cursor is on a class attribute and retrieve all the css rules in this class attribute
             const rawClasses: RegExpMatchArray = text.match(classMatchRegex);
-            if (!rawClasses || rawClasses.length === 1) {
+            const excluded: RegExpMatchArray = text.match(/[\"\(\{]/);
+            if (!rawClasses || rawClasses.length === 1 || 
+                (languageSelector == "slim" && excluded != null && !text.endsWith("class=\""))) {
                 return [];
             }
 
@@ -187,7 +189,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // SLIM based extensions
     ["slim"].forEach((extension) => {
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /([\.\w- ]*$)/));
+        // context.subscriptions.push(provideCompletionItemsGenerator(extension, /([\.\w- ]*$)/));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.(?![^(]*\))(?=[^"]*(?:"[^"]*"[^"]*)*$))/));
     });
 
     // CSS based extensions
