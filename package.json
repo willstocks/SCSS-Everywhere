@@ -2,7 +2,7 @@
   "name": "html-slim-scss-css-class-completion",
   "displayName": "IntelliSense for CSS, SCSS class names in HTML and Slim",
   "description": "CSS and SCSS class name completion for the HTML and Slim class attribute based on the definitions found in your workspace.",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"
@@ -46,6 +46,13 @@
             "type": "boolean",
             "default": false,
             "description": "Enables completion when you're writing Emmet abbreviations."
+          },
+          "html-css-class-completion.remoteStyleSheets": {
+            "type": "array",
+            "default": [
+              
+            ],
+            "description": "An array contains remote CSS files. Those remotes will be fetched and cached."
           }
         }
       }
