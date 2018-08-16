@@ -2,24 +2,6 @@
 
 > Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Otherwise, things can happen.
 
-## What's new in this extension?
-
-I've added Slim (Another Ruby Template Engine) support and also added SCSS/SASS support.
-
-When you work on `.slim`, whenever you press `.` *dot*, it will show you all relative class names. Addition to that also `class=""` tags are supported.
-
-For SCSS part, I have manually strip comments and do regexp on code. In this way I also able to locate magic methods/classes. For example; If you have `.u-pb-{class}` this extension will show you `.u-pb-` and leave it `class` name filled by you.
-
-## Why Am I manually processing SCSS files?
-
-There are few tools out there to export SCSS AST Format. However, they need to get main scss file to built it. This was a show-stopper for me. See, I don't want to build whole package everytime. That's why I partially handle SCSS files one-by-one. But faster. Try yourself.
-
-If you find any other way of implementing this, don't stop, this is open sourced extension. Contribute.
-
-# Original Extension README
-
-A Visual Studio Code extension that provides CSS class name completion for the HTML `class` attribute based on the definitions found in your workspace or external files referenced through the `link` element.
-
 ![](https://i.imgur.com/5crMfTj.gif)
 
 ## Features
@@ -38,6 +20,7 @@ A Visual Studio Code extension that provides CSS class name completion for the H
 * TypeScript React (.tsx)
 * Vue (.vue) [requires [octref.vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)]
 * Twig
+* Slim
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
@@ -51,11 +34,16 @@ A Visual Studio Code extension that provides CSS class name completion for the H
 ## Contributions
 You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/Zignd/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
 
-## What's new in version 1.17.1 (Fev 18, 2018)
-* Added support for "class" in TypeScript React, JavaScript and JavaScript React language modes. Previously only "className" was supported.
-* Added support for Emmet.
+## What's new in this fork:
+* Added SCSS/SASS support without compiling whole package.
+* Ability to parse custom and magic functions
+* Ability to get remote css files such as bootstrap. Remote CSS files will appended to temp dir of your OS.
 
-Check out the [changelog](https://github.com/zignd/HTML-CSS-Class-Completion/blob/master/CHANGELOG.md) for the current and previous updates.
+When you work on `.slim`, whenever you press `.` *dot*, it will show you all relative class names. Addition to that also `class=""` tags are supported.
+
+For SCSS part, I have manually strip comments and do regexp on code. In this way I also able to locate magic methods/classes. For example; If you have `.u-pb-{class}` this extension will show you `.u-pb-` and leave it `class` name filled by you.
+
+Check out the [changelog](https://github.com/gencer/HTML-Slim-CSS-SCSS-Class-Completion/blob/master/CHANGELOG.md) for the current and previous updates.
 
 ## Usage
 If there are HTML or JS files on your workspace, the extension automatically starts and looks for CSS class definitions. In case new CSS classes are defined, or new CSS files are added to the workspace, and you also want auto-completion for them, just hit the lightning icon on the status bar. Also, you can execute the command by pressing `Ctrl+Shift+P`(`Cmd+Shift+P` for Mac) and then typing "Cache CSS class definitions."
@@ -67,14 +55,24 @@ The extension supports a few user settings, changes to these settings will be au
 
 You can change the folders and files the extension will consider or exclude during the caching process by setting the following user settings:
 
-* `"html-css-class-completion.includeGlobPattern"` (default: `"**/*.{css,html}"`)
+* `"html-css-class-completion.includeGlobPattern"` (default: `"**/*.{css,scss,sass,html}"`)
 * `"html-css-class-completion.excludeGlobPattern"` (default: `""`)
+* `"html-css-class-completion.remoteStyleSheets"`  (default: `[]`)
+
+#### Remote Files
+```
+    ...
+	"html-css-class-completion.remoteStyleSheets": [
+		"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+	],
+	...
+```
 
 #### Emmet
 
 Emmet support comes disabled by default, the reason behind this choice is because it the current implementation simply triggers completion when you type a "." (period) and this behavior might be considered a little annoying, but it might change in the future.
 
-Currently it supports the following languages (those are [language identifier](https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers)): "html", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs", "typescriptreact", "javascript", "javascriptreact".
+Currently it supports the following languages (those are [language identifier](https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers)): "html", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs", "slim", "typescriptreact", "javascript", "javascriptreact".
 
 * `"html-css-class-completion.enableEmmetSupport"` (default: `false`)
 
