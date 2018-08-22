@@ -24,6 +24,8 @@ class Fetcher {
         const remoteStyleSheets = configuration.get<Array<string>>("html-css-class-completion.remoteStyleSheets");
 
         var paths;
+        var localFiles = await vscode.workspace.findFiles(`${includeGlobPattern}`, `${excludeGlobPattern}`);
+
         if (remoteStyleSheets.length > 0) {
             const folder = path.join(os.tmpdir(), "html_css_slim");
             if (!fs.existsSync(folder)){
@@ -52,7 +54,6 @@ class Fetcher {
 
             const relativePattern = new vscode.RelativePattern(folder, '*.css');
             paths = await vscode.workspace.findFiles(relativePattern);
-            var localFiles = await vscode.workspace.findFiles(`${includeGlobPattern}`, `${excludeGlobPattern}`);
     
             for (let parsedFile of paths) {
                 localFiles[localFiles.length] = parsedFile
