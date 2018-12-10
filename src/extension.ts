@@ -7,6 +7,7 @@ import {
     ExtensionContext, languages, Position, Range, TextDocument, Uri, window,
     workspace,
 } from "vscode";
+import * as vscode from "vscode";
 import CssClassDefinition from "./common/css-class-definition";
 import CssClassesStorage from "./css-classes-storage";
 import Fetcher from "./fetcher";
@@ -89,8 +90,9 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
             // Check if the cursor is on a class attribute and retrieve all the css rules in this class attribute
             const rawClasses: RegExpMatchArray = text.match(classMatchRegex);
             const excluded: RegExpMatchArray = text.match(/[\"\(\{]/);
-            if (!rawClasses || rawClasses.length === 1 || 
-                (languageSelector == "slim" && excluded != null && !text.endsWith("class=\""))) {
+            // vscode.window.showInformationMessage("Hello World!");
+            if (!rawClasses || rawClasses.length === 1 ||
+                (languageSelector === "slim" && excluded != null && !text.endsWith("class=\""))) {
                 return [];
             }
 
@@ -108,6 +110,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 return completionItem;
             });
 
+            // vscode.window.showInformationMessage("Hello World! 3");
             // Removes from the collection the classes already specified on the class attribute
             for (const classOnAttribute of classesOnAttribute) {
                 for (let j = 0; j < completionItems.length; j++) {
@@ -125,7 +128,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
 function enableEmmetSupport(disposables: Disposable[]) {
     const emmetRegex = /(?=\.)([\w-\. ]*$)/;
     const languageModes = ["slim", "html", "razor", "php", "blade", "vue", "twig", "markdown", "erb",
-        "handlebars", "ejs", "typescriptreact", "javascript", "javascriptreact"];
+        "handlebars", "ejs", "typescriptreact", "javascript", "javascriptreact", "scss", "sass", "css"];
     languageModes.forEach((language) => {
         emmetDisposables.push(provideCompletionItemsGenerator(language, emmetRegex, "", "."));
     });
@@ -183,18 +186,21 @@ export async function activate(context: ExtensionContext): Promise<void> {
     });
 
     // HTML based extensions
+    // tslint:disable-next-line:max-line-length
     ["slim", "html", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs"].forEach((extension) => {
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /class=["|']([\w- ]*$)/));
     });
 
     // SLIM based extensions
     ["slim"].forEach((extension) => {
-        // context.subscriptions.push(provideCompletionItemsGenerator(extension, /([\.\w- ]*$)/));
+        // tslint:disable-next-line:max-line-length
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.(?![^(]*\))(?=[^"]*(?:"[^"]*"[^"]*)*$))/));
     });
 
-    // CSS based extensions
+    // CSS/SCSS based vice-versa extensions
     ["css", "sass", "scss"].forEach((extension) => {
+        // tslint:disable-next-line:max-line-length
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.)/, "."));
         // Support for Tailwind CSS
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /@apply ([\.\w- ]*$)/, "."));
     });

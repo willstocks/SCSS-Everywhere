@@ -1,8 +1,8 @@
 {
   "name": "html-slim-scss-css-class-completion",
-  "displayName": "IntelliSense for CSS, SCSS class names in HTML and Slim",
-  "description": "CSS and SCSS class name completion for the HTML and Slim class attribute based on the definitions found in your workspace.",
-  "version": "1.1.1",
+  "displayName": "IntelliSense for CSS, SCSS class names in HTML, Slim and SCSS",
+  "description": "CSS and SCSS class name completion for the HTML, Slim and SCSS class attribute based on the definitions found in your workspace.",
+  "version": "1.2.0",
   "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"
@@ -49,9 +49,7 @@
           },
           "html-css-class-completion.remoteStyleSheets": {
             "type": "array",
-            "default": [
-              
-            ],
+            "default": [],
             "description": "An array contains remote CSS files. Those remotes will be fetched and cached."
           }
         }

@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 
 import CssClassDefinition from "../../common/css-class-definition";
 
-export default class ScssClassExtractor {
+export default class SlimClassExtractor {
     /**
      * @description Extracts class names from CSS AST
      */

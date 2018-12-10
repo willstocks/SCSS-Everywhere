@@ -7,17 +7,23 @@ import CssClassDefinition from "../../common/css-class-definition";
 import CssClassExtractor from "../common/css-class-extractor";
 import IParseEngine from "../common/parse-engine";
 import ISimpleTextDocument from "../common/simple-text-document";
+import XhtmlClassExtractor from "../common/xhtml-class-extractor";
 
 class HtmlParseEngine implements IParseEngine {
     public languageId: string = "html";
     public extension: string = "html";
 
     public async parse(textDocument: ISimpleTextDocument): Promise<CssClassDefinition[]> {
-        const definitions: CssClassDefinition[] = [];
+        let definitions: CssClassDefinition[] = [];
         const urls: string[] = [];
         let tag: string;
         let isRelStylesheet: boolean = false;
         let linkHref: string;
+
+        const code: string = textDocument.getText();
+        definitions = XhtmlClassExtractor.extract(code);
+
+        vscode.window.showInformationMessage(definitions.toString());
 
         const parser = new html.Parser({
             onattribute: (name: string, value: string) => {

@@ -1,7 +1,8 @@
 import IParseEngine from "./common/parse-engine";
 import CssParseEngine from "./types/css-parse-engine";
-import ScssParseEngine from "./types/scss-parse-engine";
 import HtmlParseEngine from "./types/html-parse-engine";
+import ScssParseEngine from "./types/scss-parse-engine";
+import SlimParseEngine from "./types/slim-parse-engine";
 
 class ParseEngineRegistry {
     public static getParseEngine(languageId: string): IParseEngine {
@@ -28,6 +29,7 @@ class ParseEngineRegistry {
         new CssParseEngine(),
         new ScssParseEngine(),
         new HtmlParseEngine(),
+        new SlimParseEngine(),
     ];
 }
 

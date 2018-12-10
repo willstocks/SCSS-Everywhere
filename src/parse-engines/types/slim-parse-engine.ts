@@ -1,17 +1,17 @@
 import * as vscode from "vscode";
 import CssClassDefinition from "../../common/css-class-definition";
 import IParseEngine from "../common/parse-engine";
-import ScssClassExtractor from "../common/scss-class-extractor";
 import ISimpleTextDocument from "../common/simple-text-document";
+import SlimClassExtractor from "../common/slim-class-extractor";
 
-class ScssParseEngine implements IParseEngine {
-    public languageId: string = "scss";
-    public extension: string = "scss";
+class SlimParseEngine implements IParseEngine {
+    public languageId: string = "slim";
+    public extension: string = "slim";
 
     public async parse(textDocument: ISimpleTextDocument): Promise<CssClassDefinition[]> {
         const code: string = textDocument.getText().replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/gm, "");
-        return ScssClassExtractor.extract(code);
+        return SlimClassExtractor.extract(code);
     }
 }
 
-export default ScssParseEngine;
+export default SlimParseEngine;
