@@ -90,7 +90,6 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
             // Check if the cursor is on a class attribute and retrieve all the css rules in this class attribute
             const rawClasses: RegExpMatchArray = text.match(classMatchRegex);
             const excluded: RegExpMatchArray = text.match(/[\"\(\{]/);
-            // vscode.window.showInformationMessage("Hello World!");
             if (!rawClasses || rawClasses.length === 1 ||
                 (languageSelector === "slim" && excluded != null && !text.endsWith("class=\""))) {
                 return [];
@@ -110,7 +109,6 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 return completionItem;
             });
 
-            // vscode.window.showInformationMessage("Hello World! 3");
             // Removes from the collection the classes already specified on the class attribute
             for (const classOnAttribute of classesOnAttribute) {
                 for (let j = 0; j < completionItems.length; j++) {
@@ -142,6 +140,14 @@ function disableEmmetSupport(disposables: Disposable[]) {
 
 export async function activate(context: ExtensionContext): Promise<void> {
     const disposables: Disposable[] = [];
+    const onSave = vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
+        if (["twig", "html", "slim", "xhtml"].indexOf(e.languageId) > -1) {
+            cache();
+        }
+    });
+
+    context.subscriptions.push(onSave);
+
     workspace.onDidChangeConfiguration(async (e) => {
         try {
             if (e.affectsConfiguration("html-css-class-completion.includeGlobPattern") ||

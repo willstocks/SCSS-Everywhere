@@ -23,8 +23,6 @@ class HtmlParseEngine implements IParseEngine {
         const code: string = textDocument.getText();
         definitions = XhtmlClassExtractor.extract(code);
 
-        vscode.window.showInformationMessage(definitions.toString());
-
         const parser = new html.Parser({
             onattribute: (name: string, value: string) => {
                 if (name === "rel" && value === "stylesheet") {
