@@ -187,14 +187,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // Javascript based extensions
     ["typescriptreact", "javascript", "javascriptreact"].forEach((extension) => {
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /className=["|']([\w- ]*$)/));
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /class=["|']([\w- ]*$)/));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|id|className)=["|']([^"^']*$)/i));
     });
 
     // HTML based extensions
     // tslint:disable-next-line:max-line-length
     ["slim", "html", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs"].forEach((extension) => {
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /class=["|']([\w- ]*$)/));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|id|className)=["|']([^"^']*$)/i));
     });
 
     // SLIM based extensions
@@ -202,7 +201,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         // tslint:disable-next-line:max-line-length
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.|\#)[^\s]*$/i, "."));
     });
-    
+
     // CSS/SCSS based vice-versa extensions
     ["css", "sass", "scss"].forEach((extension) => {
         // Support for Tailwind CSS

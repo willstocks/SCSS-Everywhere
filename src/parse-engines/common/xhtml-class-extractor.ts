@@ -7,7 +7,7 @@ export default class XhtmlClassExtractor {
      * @description Extracts class names from CSS AST
      */
     public static extract(html: string): CssClassDefinition[] {
-        const classNameRegex: RegExp = /class=["|'](.*)["|']/gim;
+        const classNameRegex: RegExp = /(class|id|className)=["|']([^"^']*$)/i;
         const referencedDefs: CssClassDefinition[] = [];
 
         let item: RegExpExecArray = classNameRegex.exec(html);
