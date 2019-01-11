@@ -38,6 +38,7 @@ You can request new features and contribute to the extension development on its 
 * Added SCSS/SASS support without compiling whole package.
 * Ability to parse custom and magic functions
 * Ability to get remote css files such as bootstrap. Remote CSS files will appended to temp dir of your OS.
+* Ability to see *Classes* and *IDs* from *.html and .slim* in *CSS and SCSS* files. 
 
 When you work on `.slim`, whenever you press `.` *dot*, it will show you all relative class names. Addition to that also `class=""` tags are supported.
 
