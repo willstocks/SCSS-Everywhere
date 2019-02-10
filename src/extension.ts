@@ -197,15 +197,15 @@ export async function activate(context: ExtensionContext): Promise<void> {
     });
 
     // SLIM based extensions
-    ["slim", "css", "sass", "scss"].forEach((extension) => {
+    ["slim"].forEach((extension) => {
         // tslint:disable-next-line:max-line-length
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\#\.|)[^\s]*$/i, ""));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\#|\.)[^\s]*$/i, ""));
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\B#\S+)[^\s]*$/i, ""));
     });
-
     // CSS/SCSS based vice-versa extensions
     ["css", "sass", "scss"].forEach((extension) => {
-        // Support for Tailwind CSS
+        // tslint:disable-next-line:max-line-length
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.|\#)[^\s]*$/i, "."));
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /@apply ([\.\w- ]*$)/, "."));
     });
 
