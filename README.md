@@ -21,6 +21,7 @@
 * Vue (.vue) [requires [octref.vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)]
 * Twig
 * Slim
+* Latte
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
@@ -45,6 +46,8 @@ When you work on `.slim`, whenever you press `.` *dot*, it will show you all rel
 For SCSS part, I have manually strip comments and do regexp on code. In this way I also able to locate magic methods/classes. For example; If you have `.u-pb-{class}` this extension will show you `.u-pb-` and leave it `class` name filled by you.
 
 Check out the [changelog](https://github.com/gencer/HTML-Slim-CSS-SCSS-Class-Completion/blob/master/CHANGELOG.md) for the current and previous updates.
+
+For more info check CHANGELOG.md
 
 ## Usage
 If there are HTML or JS files on your workspace, the extension automatically starts and looks for CSS class definitions. In case new CSS classes are defined, or new CSS files are added to the workspace, and you also want auto-completion for them, just hit the lightning icon on the status bar. Also, you can execute the command by pressing `Ctrl+Shift+P`(`Cmd+Shift+P` for Mac) and then typing "Cache CSS class definitions."
