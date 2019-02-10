@@ -187,7 +187,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // Javascript based extensions
     ["typescriptreact", "javascript", "javascriptreact"].forEach((extension) => {
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|id|className)=["|']([^"^']*$)/i));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|id|className)=["|']([\w- ]*$)/));
     });
 
     // HTML based extensions
