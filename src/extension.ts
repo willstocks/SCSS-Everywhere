@@ -141,7 +141,7 @@ function disableEmmetSupport(disposables: Disposable[]) {
 export async function activate(context: ExtensionContext): Promise<void> {
     const disposables: Disposable[] = [];
     const onSave = vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
-        if (["twig", "html", "latte", "slim", "xhtml"].indexOf(e.languageId) > -1) {
+        if (["twig", "html", "latte", "slim", "xhtml", "scss", "css"].indexOf(e.languageId) > -1) {
             cache();
         }
     });
