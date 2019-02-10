@@ -1,6 +1,8 @@
+import * as vscode from "vscode";
 import IParseEngine from "./common/parse-engine";
 import CssParseEngine from "./types/css-parse-engine";
 import HtmlParseEngine from "./types/html-parse-engine";
+import LatteParseEngine from "./types/latte-parse-engine";
 import ScssParseEngine from "./types/scss-parse-engine";
 import SlimParseEngine from "./types/slim-parse-engine";
 
@@ -20,13 +22,13 @@ class ParseEngineRegistry {
             ParseEngineRegistry.languagesIds = ParseEngineRegistry.registry.map(
                 (parseEngine) => parseEngine.languageId);
         }
-
         return ParseEngineRegistry.languagesIds;
     }
 
     private static languagesIds: string[];
     private static registry: IParseEngine[] = [
         new CssParseEngine(),
+        new LatteParseEngine(),
         new ScssParseEngine(),
         new HtmlParseEngine(),
         new SlimParseEngine(),
