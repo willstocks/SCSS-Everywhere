@@ -76,7 +76,8 @@
     "@types/request": "^2.0.11",
     "@types/request-promise": "^4.1.39",
     "@types/verror": "^1.10.3",
-    "tslint": "^5.9.1"
+    "tslint": "^5.9.1",
+    "vscode": "^1.1.6"
   },
   "dependencies": {
     "bluebird": "^3.5.1",
@@ -88,7 +89,6 @@
     "request-promise": "^4.2.1",
     "source-map-support": "^0.5.3",
     "typescript": "^2.6.2",
-    "verror": "^1.10.0",
-    "vscode": "^1.1.6"
+    "verror": "^1.10.0"
   }
 }
