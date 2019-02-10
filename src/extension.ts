@@ -17,7 +17,7 @@ import ParseEngineGateway from "./parse-engine-gateway";
 const notifier: Notifier = new Notifier("html-css-class-completion.cache");
 let uniqueDefinitions: CssClassDefinition[] = [];
 
-const completionTriggerChars = ['"', "'", " ", "."];
+const completionTriggerChars = ['"', "'", " ", ".", "#"];
 
 let caching: boolean = false;
 
@@ -199,7 +199,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     // SLIM based extensions
     ["slim", "css", "sass", "scss"].forEach((extension) => {
         // tslint:disable-next-line:max-line-length
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.|\#)[^\s]*$/i, "."));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\#\.|)[^\s]*$/i, ""));
     });
 
     // CSS/SCSS based vice-versa extensions
