@@ -2,7 +2,7 @@
   "name": "html-slim-scss-css-class-completion",
   "displayName": "IntelliSense for CSS, SCSS class names in HTML, Slim and SCSS",
   "description": "CSS and SCSS class name completion for the HTML, Slim and SCSS class attribute based on the definitions found in your workspace.",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"
