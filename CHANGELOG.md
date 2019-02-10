@@ -1,3 +1,13 @@
+### v1.3.0
+
+* Fixed #4, #5, #7, #8, #9, #10, #11: 
+  + Better ID tag parsing.
+  + Ability to show suggestions from HTML to CSS/SCSS
+  + Latte template support. (Both directions)
+  + Fixed .vue class autocompletion issue
+  + exclude node_modules/ from cache. This causes high cpu load.
+  + pressing " or ' will trigger autocomplete. No need for space anymore.
+  
 ### v1.2.1
 
 * Fixed #6. Extension autocompletes weird "class" strings in html, js and css.
