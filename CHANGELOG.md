@@ -1,8 +1,15 @@
-### v1.5.0
+### v1.5.3
 
-* Updated: Inject single file only.
+* Fixed: Incremental build contains deleted items
+* Incremental build is seems to be stable. With this build, We also remove unused definitions from autocomplete.
 
-**Still on-going. Do not use it on production.**
+### v1.5.2
+
+* Fixed: Find usage issue
+
+### v1.5.1
+
+* Fixed: Find usage issue
 
 ### v1.5.0
 

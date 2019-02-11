@@ -2,7 +2,8 @@
 
 > Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Otherwise, things can happen.
 
-![](https://i.imgur.com/5crMfTj.gif)
+
+![](images/find_usages.png)
 
 ## Features
 * Gives you autocompletion for CSS class definitions that can be found in your workspace (defined in CSS files or the in the file types listed in the Supported Language Modes section)

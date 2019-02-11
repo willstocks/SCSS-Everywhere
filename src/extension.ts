@@ -33,6 +33,7 @@ interface ISelectorObject {
 }
 
 const files: IFileObject = {};
+let snapshot: IFileObject = {};
 let selectors: ISelectorObject = {};
 
 let definitions: CssClassDefinition[] = [];
@@ -95,6 +96,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             }, { concurrency: 30 });
 
             if (!rewamp) {
+                snapshot = Object.assign({}, files);
                 for (const path of Object.keys(files)) {
                     Array.prototype.push.apply(definitions, files[path].selectors);
                     if (endsWithAny([".latte", ".twig", ".html", ".slim"], path)) {
@@ -113,6 +115,19 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                 const current: Uri = uris[0];
                 if (endsWithAny([".latte", ".twig", ".html", ".slim"], uris[0].path)) {
                     if (defs) {
+                        if (snapshot[current.fsPath] !== undefined) {
+                            snapshot[current.fsPath].selectors.map((element) => {
+                                if (selectors[element.className] !== undefined &&
+                                    selectors[element.className].length === 1) {
+                                    const indexElem: number = definitions.indexOf(element);
+                                    if (indexElem !== -1) {
+                                        definitions.splice(indexElem, 1);
+                                        selectors[element.className] = [];
+                                    }
+                                }
+
+                            });
+                        }
                         defs.map((definition) => {
                             if (selectors[definition.className] === undefined) {
                                 selectors[definition.className] = [];
@@ -120,7 +135,9 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                             if (selectors[definition.className].indexOf(current) === -1) {
                                 selectors[definition.className].push(current);
                             }
+                            snapshot[current.fsPath] = files[current.fsPath];
                         });
+
                     }
                 }
             }
