@@ -1,3 +1,9 @@
+### v1.4.0
+
+* Incremental changes. We are only update changed parts. This saves lot of CPU and time. Your workspace will be scanned once you open VSCode, after that everything will be incremental. (**BETA**)
+
+Let me know if anything goes wrong for you by opening an issue on GitHub...
+
 ### v1.3.1
 
 * Fixed #14:

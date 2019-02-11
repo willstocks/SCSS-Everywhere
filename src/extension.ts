@@ -20,15 +20,32 @@ let uniqueDefinitions: CssClassDefinition[] = [];
 const completionTriggerChars = ['"', "'", " ", ".", "#"];
 
 let caching: boolean = false;
+interface ICacheObject {
+    uri: Uri;
+    selectors: CssClassDefinition[];
+}
+
+interface IFileObject {
+    [key: string]: ICacheObject;
+}
+
+const files: IFileObject = {};
 
 const emmetDisposables: Array<{ dispose(): any }> = [];
 
-async function cache(): Promise<void> {
+async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
     try {
-        notifier.notify("eye", "Looking for CSS classes in the workspace...");
+        let rewamp = false;
+        if (!silent) {
+            notifier.notify("eye", "Looking for CSS classes in the workspace...");
+        }
 
         console.log("Looking for parseable documents...");
-        const uris: Uri[] = await Fetcher.findAllParseableDocuments();
+        if (!uris || uris.length === 0) {
+            uris = await Fetcher.findAllParseableDocuments();
+        } else {
+            rewamp = true;
+        }
 
         if (!uris || uris.length === 0) {
             console.log("Found no documents");
@@ -48,15 +65,23 @@ async function cache(): Promise<void> {
         try {
             await Bluebird.map(uris, async (uri) => {
                 try {
-                    Array.prototype.push.apply(definitions, await ParseEngineGateway.callParser(uri));
+                    const defs = await ParseEngineGateway.callParser(uri);
+                    const def: ICacheObject = { uri, selectors: defs };
+                    files[uri.fsPath] = def;
                 } catch (error) {
                     failedLogs += `${uri.path}\n`;
                     failedLogsCount++;
                 }
                 filesParsed++;
                 const progress = ((filesParsed / uris.length) * 100).toFixed(2);
-                notifier.notify("eye", "Looking for CSS classes in the workspace... (" + progress + "%)", false);
+                if (!silent) {
+                    notifier.notify("eye", "Looking for CSS classes in the workspace... (" + progress + "%)", false);
+                }
             }, { concurrency: 30 });
+
+            for (const path of Object.keys(files)) {
+                Array.prototype.push.apply(definitions, files[path].selectors);
+            }
         } catch (err) {
             notifier.notify("alert", "Failed to cache the CSS classes in the workspace (click for another attempt)");
             throw new VError(err, "Failed to parse the documents");
@@ -71,7 +96,9 @@ async function cache(): Promise<void> {
         console.log(failedLogsCount, "failed attempts to parse. List of the documents:");
         console.log(failedLogs);
 
-        notifier.notify("zap", "CSS/SCSS classes cached (click to cache again)");
+        if (!silent) {
+            notifier.notify("zap", "CSS/SCSS classes cached (click to cache again)");
+        }
     } catch (err) {
         notifier.notify("alert", "Failed to cache the CSS classes in the workspace (click for another attempt)");
         throw new VError(err,
@@ -140,11 +167,11 @@ function disableEmmetSupport(disposables: Disposable[]) {
 
 export async function activate(context: ExtensionContext): Promise<void> {
     const disposables: Disposable[] = [];
-    // const onSave = vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
-        // if (["twig", "html", "latte", "slim", "xhtml"].indexOf(e.languageId) > -1) {
-            // cache();
-        // }
-    // });
+    const onSave = vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
+        if (["twig", "html", "latte", "slim", "xhtml", "css", "scss"].indexOf(e.languageId) > -1) {
+            cache([e.uri], true);
+        }
+    });
 
     // context.subscriptions.push(onSave);
 
@@ -152,7 +179,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         try {
             if (e.affectsConfiguration("html-css-class-completion.includeGlobPattern") ||
                 e.affectsConfiguration("html-css-class-completion.excludeGlobPattern")) {
-                await cache();
+                await cache([]);
             }
 
             if (e.affectsConfiguration("html-css-class-completion.enableEmmetSupport")) {
@@ -175,7 +202,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
         caching = true;
         try {
-            await cache();
+            await cache([]);
         } catch (err) {
             err = new VError(err, "Failed to cache the CSS classes in the workspace");
             console.error(err);
@@ -211,7 +238,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     caching = true;
     try {
-        await cache();
+        await cache([]);
     } catch (err) {
         err = new VError(err, "Failed to cache the CSS classes in the workspace for the first time");
         console.error(err);
