@@ -33,7 +33,7 @@ interface ISelectorObject {
 }
 
 const files: IFileObject = {};
-const selectors: ISelectorObject = {};
+let selectors: ISelectorObject = {};
 
 let definitions: CssClassDefinition[] = [];
 const emmetDisposables: Array<{ dispose(): any }> = [];
@@ -56,6 +56,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
         if (!uris || uris.length === 0) {
             uris = await Fetcher.findAllParseableDocuments();
             definitions = [];
+            selectors = {};
         } else {
             rewamp = true;
         }
@@ -74,7 +75,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
 
         console.log("Parsing documents and looking for CSS class definitions...");
 
-        let defs;
+        let defs: CssClassDefinition[];
 
         try {
             await Bluebird.map(uris, async (uri) => {
@@ -109,6 +110,19 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                 }
             } else {
                 Array.prototype.push.apply(definitions, defs);
+                const current: Uri = uris[0];
+                if (endsWithAny([".latte", ".twig", ".html", ".slim"], uris[0].path)) {
+                    if (defs) {
+                        defs.map((definition) => {
+                            if (selectors[definition.className] === undefined) {
+                                selectors[definition.className] = [];
+                            }
+                            if (selectors[definition.className].indexOf(current) === -1) {
+                                selectors[definition.className].push(current);
+                            }
+                        });
+                    }
+                }
             }
         } catch (err) {
             notifier.notify("alert", "Failed to cache the CSS classes in the workspace (click for another attempt)");
@@ -163,13 +177,13 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 completionItem.insertText = completionClassName;
                 if (loadFiles !== undefined && loadFiles.length > 0) {
                     const markdownDoc = new MarkdownString(
-                        "`" + classPrefix + definition.className + "`\r\n\r\n" +
+                        "`" + classPrefix + definition.className + "`\r\n" +
                         loadFiles.length + " occurences in files:\r\n\r\n",
                     );
                     const basePath: string = vscode.workspace.rootPath;
                     loadFiles.forEach((value) => {
                         const path = value.fsPath.replace(basePath, "");
-                        markdownDoc.appendMarkdown("\r\n\r\n[" + path + "](" + value.path + ")");
+                        markdownDoc.appendMarkdown("\r\n[" + path + "](" + value.path + ")");
                     });
                     completionItem.documentation = markdownDoc;
                 }
@@ -189,10 +203,6 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
             return completionItems;
         },
     }, ...completionTriggerChars);
-}
-
-function getLocations(definition: CssClassDefinition) {
-    return selectors[definition.className];
 }
 
 function enableEmmetSupport(disposables: Disposable[]) {
