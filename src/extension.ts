@@ -35,6 +35,7 @@ interface ISelectorObject {
 const files: IFileObject = {};
 const selectors: ISelectorObject = {};
 
+let definitions: CssClassDefinition[] = [];
 const emmetDisposables: Array<{ dispose(): any }> = [];
 
 // hack into it
@@ -54,6 +55,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
         console.log("Looking for parseable documents...");
         if (!uris || uris.length === 0) {
             uris = await Fetcher.findAllParseableDocuments();
+            definitions = [];
         } else {
             rewamp = true;
         }
@@ -65,7 +67,6 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
         }
 
         console.log("Found all parseable documents.");
-        const definitions: CssClassDefinition[] = [];
 
         let filesParsed: number = 0;
         let failedLogs: string = "";
@@ -73,10 +74,12 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
 
         console.log("Parsing documents and looking for CSS class definitions...");
 
+        let defs;
+
         try {
             await Bluebird.map(uris, async (uri) => {
                 try {
-                    const defs = await ParseEngineGateway.callParser(uri);
+                    defs = await ParseEngineGateway.callParser(uri);
                     const def: ICacheObject = { uri, selectors: defs };
                     files[uri.fsPath] = def;
                 } catch (error) {
@@ -90,18 +93,22 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                 }
             }, { concurrency: 30 });
 
-            for (const path of Object.keys(files)) {
-                Array.prototype.push.apply(definitions, files[path].selectors);
-                if (endsWithAny([".latte", ".twig", ".html", ".slim"], path)) {
-                    files[path].selectors.map((definition) => {
-                        if (selectors[definition.className] === undefined) {
-                            selectors[definition.className] = [];
-                        }
-                        if (selectors[definition.className].indexOf(files[path].uri) === -1) {
-                            selectors[definition.className].push(files[path].uri);
-                        }
-                    });
+            if (!rewamp) {
+                for (const path of Object.keys(files)) {
+                    Array.prototype.push.apply(definitions, files[path].selectors);
+                    if (endsWithAny([".latte", ".twig", ".html", ".slim"], path)) {
+                        files[path].selectors.map((definition) => {
+                            if (selectors[definition.className] === undefined) {
+                                selectors[definition.className] = [];
+                            }
+                            if (selectors[definition.className].indexOf(files[path].uri) === -1) {
+                                selectors[definition.className].push(files[path].uri);
+                            }
+                        });
+                    }
                 }
+            } else {
+                Array.prototype.push.apply(definitions, defs);
             }
         } catch (err) {
             notifier.notify("alert", "Failed to cache the CSS classes in the workspace (click for another attempt)");

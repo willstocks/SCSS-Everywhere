@@ -1,5 +1,11 @@
 ### v1.5.0
 
+* Updated: Inject single file only.
+
+**Still on-going. Do not use it on production.**
+
+### v1.5.0
+
 * Added: Find usage locations in scss/css files. **WIP**
 
 **Still on-going. Do not use it on production.**
