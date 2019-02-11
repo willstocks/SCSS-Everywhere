@@ -1,3 +1,9 @@
+### v1.5.0
+
+* Added: Find usage locations in scss/css files. **WIP**
+
+**Still on-going. Do not use it on production.**
+
 ### v1.4.0
 
 * Incremental changes. We are only update changed parts. This saves lot of CPU and time. Your workspace will be scanned once you open VSCode, after that everything will be incremental. (**BETA**)

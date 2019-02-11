@@ -1,4 +1,4 @@
-# IntelliSense for CSS, SCSS class names in HTML and Slim
+# IntelliSense for CSS, SCSS class and ID names in HTML, Latte, Slim...
 
 > Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Otherwise, things can happen.
 
@@ -26,6 +26,8 @@
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
 * EJS (.ejs)
+
+Both directions (from CSS/SCSS to HTML, Latte... or from HTML, Latte to CSS/SCSS...) are supported. Only changed parts will be re-indexed so this will give you almost instant auto-completion.
 
 ## Specific Support
 * "@apply" directive in CSS, SASS and SCSS Files for [Tailwind CSS](https://tailwindcss.com)

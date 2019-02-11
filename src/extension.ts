@@ -4,7 +4,7 @@ import "source-map-support/register";
 import * as VError from "verror";
 import {
     commands, CompletionItem, CompletionItemKind, Disposable,
-    ExtensionContext, languages, Position, Range, TextDocument, Uri, window,
+    ExtensionContext, Hover, languages, MarkdownString, Position, Range, TextDocument, Uri, window,
     workspace,
 } from "vscode";
 import * as vscode from "vscode";
@@ -28,10 +28,21 @@ interface ICacheObject {
 interface IFileObject {
     [key: string]: ICacheObject;
 }
+interface ISelectorObject {
+    [key: string]: Uri[];
+}
 
 const files: IFileObject = {};
+const selectors: ISelectorObject = {};
 
 const emmetDisposables: Array<{ dispose(): any }> = [];
+
+// hack into it
+function endsWithAny(suffixes: string[], str: string) {
+    return suffixes.some((suffix) => {
+        return str.endsWith(suffix);
+    });
+}
 
 async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
     try {
@@ -81,6 +92,16 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
 
             for (const path of Object.keys(files)) {
                 Array.prototype.push.apply(definitions, files[path].selectors);
+                if (endsWithAny([".latte", ".twig", ".html", ".slim"], path)) {
+                    files[path].selectors.map((definition) => {
+                        if (selectors[definition.className] === undefined) {
+                            selectors[definition.className] = [];
+                        }
+                        if (selectors[definition.className].indexOf(files[path].uri) === -1) {
+                            selectors[definition.className].push(files[path].uri);
+                        }
+                    });
+                }
             }
         } catch (err) {
             notifier.notify("alert", "Failed to cache the CSS classes in the workspace (click for another attempt)");
@@ -130,8 +151,21 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 const completionItem = new CompletionItem(definition.className, CompletionItemKind.Variable);
                 const completionClassName = `${classPrefix}${definition.className}`;
 
+                const loadFiles = selectors[definition.className];
                 completionItem.filterText = completionClassName;
                 completionItem.insertText = completionClassName;
+                if (loadFiles !== undefined && loadFiles.length > 0) {
+                    const markdownDoc = new MarkdownString(
+                        "`" + classPrefix + definition.className + "`\r\n\r\n" +
+                        loadFiles.length + " occurences in files:\r\n\r\n",
+                    );
+                    const basePath: string = vscode.workspace.rootPath;
+                    loadFiles.forEach((value) => {
+                        const path = value.fsPath.replace(basePath, "");
+                        markdownDoc.appendMarkdown("\r\n\r\n[" + path + "](" + value.path + ")");
+                    });
+                    completionItem.documentation = markdownDoc;
+                }
 
                 return completionItem;
             });
@@ -148,6 +182,10 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
             return completionItems;
         },
     }, ...completionTriggerChars);
+}
+
+function getLocations(definition: CssClassDefinition) {
+    return selectors[definition.className];
 }
 
 function enableEmmetSupport(disposables: Disposable[]) {
@@ -173,7 +211,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
         }
     });
 
-    // context.subscriptions.push(onSave);
+    context.subscriptions.push(onSave);
 
     workspace.onDidChangeConfiguration(async (e) => {
         try {
@@ -185,7 +223,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
             if (e.affectsConfiguration("html-css-class-completion.enableEmmetSupport")) {
                 const isEnabled = workspace.getConfiguration()
                     .get<boolean>("html-css-class-completion.enableEmmetSupport");
-                isEnabled ? enableEmmetSupport(emmetDisposables) :  disableEmmetSupport(emmetDisposables);
+                isEnabled ? enableEmmetSupport(emmetDisposables) : disableEmmetSupport(emmetDisposables);
             }
         } catch (err) {
             err = new VError(err, "Failed to automatically reload the extension after the configuration change");
