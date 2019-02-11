@@ -1,3 +1,8 @@
+### v1.3.1
+
+* Fixed #14:
+  + Prevent re-cache everytime.
+  
 ### v1.3.0
 
 * Fixed #4, #5, #7, #8, #9, #10, #11: 
