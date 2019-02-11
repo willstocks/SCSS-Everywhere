@@ -3,6 +3,10 @@
 > Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Otherwise, things can happen.
 
 
+![](https://i.imgur.com/5crMfTj.gif)
+
+Find usages:
+
 ![](images/find_usages.png)
 
 ## Features
