@@ -20,7 +20,9 @@ export default class XhtmlClassExtractor {
         let itemIds: RegExpExecArray = idRegex.exec(html);
         const ids: string[] = [];
         while (itemIds) {
-            ids.push(itemIds[0]);
+            if (classes.indexOf(itemIds[0]) === -1) {
+                ids.push(itemIds[0]);
+            }
             itemIds = classNameRegex.exec(html);
         }
 

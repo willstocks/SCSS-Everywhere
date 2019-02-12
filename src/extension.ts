@@ -102,11 +102,12 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                     Array.prototype.push.apply(definitions, files[path].selectors);
                     if (endsWithAny(searchForIn, path)) {
                         files[path].selectors.map((definition) => {
-                            if (selectors[definition.className] === undefined) {
-                                selectors[definition.className] = [];
+                            const className: string = definition.className.replace("#", "").replace(".", "");
+                            if (selectors[className] === undefined) {
+                                selectors[className] = [];
                             }
-                            if (selectors[definition.className].indexOf(files[path].uri) === -1) {
-                                selectors[definition.className].push(files[path].uri);
+                            if (selectors[className].indexOf(files[path].uri) === -1) {
+                                selectors[className].push(files[path].uri);
                             }
                         });
                     }
@@ -118,23 +119,25 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                     if (defs) {
                         if (snapshot[current.fsPath] !== undefined) {
                             snapshot[current.fsPath].selectors.map((element) => {
-                                if (selectors[element.className] !== undefined &&
-                                    selectors[element.className].length === 1) {
+                                const className: string = element.className.replace("#", "").replace(".", "");
+                                if (selectors[className] !== undefined &&
+                                    selectors[className].length === 1) {
                                     const indexElem: number = definitions.indexOf(element);
                                     if (indexElem !== -1) {
                                         definitions.splice(indexElem, 1);
-                                        selectors[element.className] = [];
+                                        selectors[className] = [];
                                     }
                                 }
 
                             });
                         }
                         defs.map((definition) => {
-                            if (selectors[definition.className] === undefined) {
-                                selectors[definition.className] = [];
+                            const className: string = definition.className.replace("#", "").replace(".", "");
+                            if (selectors[className] === undefined) {
+                                selectors[className] = [];
                             }
-                            if (selectors[definition.className].indexOf(current) === -1) {
-                                selectors[definition.className].push(current);
+                            if (selectors[className].indexOf(current) === -1) {
+                                selectors[className].push(current);
                             }
                             snapshot[current.fsPath] = files[current.fsPath];
                         });
@@ -191,7 +194,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 const completionItem = new CompletionItem(className, CompletionItemKind.Variable);
                 const completionClassName = `${classPrefix}${className}`;
 
-                const loadFiles = selectors[definition.className];
+                const loadFiles = selectors[className];
 
                 completionItem.filterText = completionClassName;
                 completionItem.insertText = completionClassName;

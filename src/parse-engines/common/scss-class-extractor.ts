@@ -15,7 +15,6 @@ export default class ScssClassExtractor {
             definitions.push(new CssClassDefinition(item[1]));
             item = classNameRegex.exec(scss);
         }
-
         return definitions;
     }
 }
