@@ -1,3 +1,8 @@
+### v1.5.4
+
+* Fixed: PHP and SCSS find usages
+* Fixed: No new line on found usages (descriptions)
+
 ### v1.5.3
 
 * Fixed: Incremental build contains deleted items
