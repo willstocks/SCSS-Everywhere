@@ -1,5 +1,9 @@
 ### v1.5.10
 
+* Fixed: New `enableScssFindUsage` setting was mis-behaving. Now it is fixed.
+  
+### v1.5.10
+
 * Fixed: Slow intellisense due to SCSS usage indexing. Disabled by default try this to enable:
 
 ```

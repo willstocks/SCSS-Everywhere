@@ -38,7 +38,7 @@ let selectors: ISelectorObject = {};
 
 let definitions: CssClassDefinition[] = [];
 const emmetDisposables: Array<{ dispose(): any }> = [];
-let searchForIn: string[] = [".latte", ".twig", ".html", ".slim", ".php", ".scss"];
+const searchForIn: string[] = [".latte", ".twig", ".html", ".slim", ".php", ".scss"];
 
 // hack into it
 function endsWithAny(suffixes: string[], str: string) {
@@ -102,9 +102,11 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             if (!isScssEnabled) {
                 const scssIndex: number = searchForIn.indexOf(".scss");
                 if (scssIndex >= 0) {
-                    searchForIn = searchForIn.slice(scssIndex, 1);
+                    searchForIn.pop();
                 }
             }
+
+            window.showInformationMessage(searchForIn.join(", "));
 
             if (!rewamp) {
                 snapshot = Object.assign({}, files);
