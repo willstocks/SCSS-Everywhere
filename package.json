@@ -2,7 +2,7 @@
   "name": "html-slim-scss-css-class-completion",
   "displayName": "IntelliSense for CSS, SCSS class names in HTML, Slim and SCSS",
   "description": ":class and :id completion for HTML, Latte, Slim, PHP, ERB, Javascript, CSS and SCSS. Just declare class in your template and see it in your CSS/SCSS file. (Both ways)",
-  "version": "1.5.4",
+  "version": "1.5.5",
   "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"

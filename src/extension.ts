@@ -17,7 +17,7 @@ import ParseEngineGateway from "./parse-engine-gateway";
 const notifier: Notifier = new Notifier("html-css-class-completion.cache");
 let uniqueDefinitions: CssClassDefinition[] = [];
 
-const completionTriggerChars = ['"', "'", " ", ".", "#"];
+const completionTriggerChars = ["#", '"', "'", " ", "."];
 
 let caching: boolean = false;
 interface ICacheObject {
@@ -187,15 +187,23 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
 
             // Creates a collection of CompletionItem based on the classes already cached
             const completionItems = uniqueDefinitions.map((definition) => {
-                const completionItem = new CompletionItem(definition.className, CompletionItemKind.Variable);
-                const completionClassName = `${classPrefix}${definition.className}`;
+                const className = definition.className.replace(".", "").replace("#", "");
+                const completionItem = new CompletionItem(className, CompletionItemKind.Variable);
+                const completionClassName = `${classPrefix}${className}`;
 
                 const loadFiles = selectors[definition.className];
+
                 completionItem.filterText = completionClassName;
                 completionItem.insertText = completionClassName;
+                let classPrefixOriginal: string = "#";
+                if (definition.className.startsWith("#")) {
+                    completionItem.kind = CompletionItemKind.Method;
+                } else {
+                    classPrefixOriginal = ".";
+                }
                 if (loadFiles !== undefined && loadFiles.length > 0) {
                     const markdownDoc = new MarkdownString(
-                        "`" + classPrefix + definition.className + "`\r\n\r\n" +
+                        "`" + classPrefixOriginal + className + "`\r\n\r\n" +
                         loadFiles.length + " occurences in files:\r\n\r\n",
                     );
                     const basePath: string = vscode.workspace.rootPath;
@@ -306,6 +314,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     ["css", "sass", "scss"].forEach((extension) => {
         // tslint:disable-next-line:max-line-length
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.|\#)[^\s]*$/i, "."));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /[^\s]*$/i, "#", "#"));
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /@apply ([\.\w- ]*$)/, "."));
     });
 
