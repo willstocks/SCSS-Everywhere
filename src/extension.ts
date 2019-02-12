@@ -195,13 +195,13 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 completionItem.insertText = completionClassName;
                 if (loadFiles !== undefined && loadFiles.length > 0) {
                     const markdownDoc = new MarkdownString(
-                        "`" + classPrefix + definition.className + "`\r\n" +
+                        "`" + classPrefix + definition.className + "`\r\n\r\n" +
                         loadFiles.length + " occurences in files:\r\n\r\n",
                     );
                     const basePath: string = vscode.workspace.rootPath;
                     loadFiles.forEach((value) => {
                         const path = value.fsPath.replace(basePath, "");
-                        markdownDoc.appendMarkdown("\r\n[" + path + "](" + value.path + ")");
+                        markdownDoc.appendMarkdown("\r\n\r\n[" + path + "](" + value.path + ")");
                     });
                     completionItem.documentation = markdownDoc;
                 }
