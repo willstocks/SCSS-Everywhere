@@ -1,3 +1,7 @@
+### v1.5.8
+
+* Fixed: Do not show same file twice.
+
 ### v1.5.7
 
 * Added: ID completions by pressing `#`

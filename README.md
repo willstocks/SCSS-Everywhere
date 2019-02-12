@@ -9,6 +9,10 @@ Find usages:
 
 ![](images/find_usages.png)
 
+ID Support:
+
+![](images/id_support.png)
+
 ## Features
 * Gives you autocompletion for CSS class definitions that can be found in your workspace (defined in CSS files or the in the file types listed in the Supported Language Modes section)
 * Supports external stylesheets referenced through `link` elements in HTML files
