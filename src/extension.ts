@@ -38,6 +38,7 @@ let selectors: ISelectorObject = {};
 
 let definitions: CssClassDefinition[] = [];
 const emmetDisposables: Array<{ dispose(): any }> = [];
+const searchForIn: string[] = [".latte", ".twig", ".html", ".slim", ".php", ".scss"];
 
 // hack into it
 function endsWithAny(suffixes: string[], str: string) {
@@ -99,7 +100,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                 snapshot = Object.assign({}, files);
                 for (const path of Object.keys(files)) {
                     Array.prototype.push.apply(definitions, files[path].selectors);
-                    if (endsWithAny([".latte", ".twig", ".html", ".slim"], path)) {
+                    if (endsWithAny(searchForIn, path)) {
                         files[path].selectors.map((definition) => {
                             if (selectors[definition.className] === undefined) {
                                 selectors[definition.className] = [];
@@ -113,7 +114,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             } else {
                 Array.prototype.push.apply(definitions, defs);
                 const current: Uri = uris[0];
-                if (endsWithAny([".latte", ".twig", ".html", ".slim"], uris[0].path)) {
+                if (endsWithAny(searchForIn, uris[0].path)) {
                     if (defs) {
                         if (snapshot[current.fsPath] !== undefined) {
                             snapshot[current.fsPath].selectors.map((element) => {
