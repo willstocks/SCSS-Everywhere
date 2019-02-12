@@ -1,3 +1,7 @@
+### v1.5.9
+
+* Fixed: Multiline ids are not processed due to wrong variable executed in second.
+  
 ### v1.5.8
 
 * Fixed: Do not show same file twice.

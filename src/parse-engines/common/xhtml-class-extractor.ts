@@ -7,23 +7,23 @@ export default class XhtmlClassExtractor {
      * @description Extracts class names from CSS AST
      */
     public static extract(html: string): CssClassDefinition[] {
-        const classNameRegex: RegExp = /(?<=(class|className)=\")[^"]+(?=\")/igm;
-        const idRegex: RegExp = /(?<=(id)=\")[^"]+(?=\")/igm;
+        const classNameRegex: RegExp = /(?<=(class|className)=\")[^"]+(?=\")/ig;
+        const idRegex: RegExp = /(?<=(id)=\")[^"]+(?=\")/ig;
 
         let item: RegExpExecArray = classNameRegex.exec(html);
+        let itemIds: RegExpExecArray = idRegex.exec(html);
+
         const classes: string[] = [];
+        const ids: string[] = [];
+
         while (item) {
             classes.push(item[0]);
             item = classNameRegex.exec(html);
         }
 
-        let itemIds: RegExpExecArray = idRegex.exec(html);
-        const ids: string[] = [];
         while (itemIds) {
-            if (classes.indexOf(itemIds[0]) === -1) {
-                ids.push(itemIds[0]);
-            }
-            itemIds = classNameRegex.exec(html);
+            ids.push(itemIds[0]);
+            itemIds = idRegex.exec(html);
         }
 
         let referencedDefs: CssClassDefinition[] = [];
@@ -39,7 +39,7 @@ export default class XhtmlClassExtractor {
             const words: string[] = elem.split(" ");
             words.forEach((e) => {
                 // we will extract kind from first char
-                e = (id) ? `#${e}` :  `.${e}`;
+                e = (id) ? `#${e}` : `.${e}`;
                 referencedDefs.push(new CssClassDefinition(e));
             });
         });
