@@ -1,4 +1,4 @@
-### v1.5.10
+### v1.5.11
 
 * Fixed: New `enableScssFindUsage` setting was mis-behaving. Now it is fixed.
   
