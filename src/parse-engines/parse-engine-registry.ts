@@ -3,6 +3,7 @@ import IParseEngine from "./common/parse-engine";
 import CssParseEngine from "./types/css-parse-engine";
 import HtmlParseEngine from "./types/html-parse-engine";
 import LatteParseEngine from "./types/latte-parse-engine";
+import PhpParseEngine from "./types/php-parse-engine";
 import ScssParseEngine from "./types/scss-parse-engine";
 import SlimParseEngine from "./types/slim-parse-engine";
 
@@ -32,6 +33,7 @@ class ParseEngineRegistry {
         new ScssParseEngine(),
         new HtmlParseEngine(),
         new SlimParseEngine(),
+        new PhpParseEngine(),
     ];
 }
 
