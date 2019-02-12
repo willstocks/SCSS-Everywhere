@@ -85,7 +85,7 @@ You can change the folders and files the extension will consider or exclude duri
 
 #### SCSS Find usage and slowness
 
-When we include SCSS files to fshow usages, IntelliSense can be slow. This is `false` by default. To enable (you've been warned) this set this setting to true ands restart (required):
+When we include SCSS files to show usages, IntelliSense can be slow. This is `false` by default. To enable (you've been warned) set this setting to true and restart (required):
 
 ```
   "html-css-class-completion.enableScssFindUsage": true,
