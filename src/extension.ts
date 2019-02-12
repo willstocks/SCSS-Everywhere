@@ -106,8 +106,6 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                 }
             }
 
-            window.showInformationMessage(searchForIn.join(", "));
-
             if (!rewamp) {
                 snapshot = Object.assign({}, files);
                 for (const path of Object.keys(files)) {
