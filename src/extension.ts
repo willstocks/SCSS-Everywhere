@@ -99,11 +99,8 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             const isScssEnabled = workspace.getConfiguration()
                     .get<boolean>("html-css-class-completion.enableScssFindUsage");
 
-            if (!isScssEnabled) {
-                const scssIndex: number = searchForIn.indexOf(".scss");
-                if (scssIndex >= 0) {
-                    searchForIn.pop();
-                }
+            if (!isScssEnabled && searchForIn.indexOf(".scss") >= 0) {
+                searchForIn.pop();
             }
 
             if (!rewamp) {
