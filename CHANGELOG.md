@@ -1,3 +1,7 @@
+### v1.5.7
+
+* Added: ID completions by pressing `#`
+
 ### v1.5.6
 
 * Fixed: Multiple occurrences...

@@ -150,7 +150,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             throw new VError(err, "Failed to parse the documents");
         }
 
-        uniqueDefinitions = _.uniqBy(definitions, (def) => def.className);
+        uniqueDefinitions = _.uniqBy(definitions, (def) => def.className.replace(".", "").replace("#", ""));
 
         console.log("Summary:");
         console.log(uris.length, "parseable documents found");
@@ -196,13 +196,22 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
 
                 const loadFiles = selectors[className];
 
-                completionItem.filterText = completionClassName;
-                completionItem.insertText = completionClassName;
                 let classPrefixOriginal: string = "#";
                 if (definition.className.startsWith("#")) {
                     completionItem.kind = CompletionItemKind.Method;
                 } else {
                     classPrefixOriginal = ".";
+                }
+
+                if (definition.className.startsWith("#") && classPrefix === "#") {
+                    completionItem.filterText = completionClassName;
+                    completionItem.insertText = completionClassName;
+                } else if (!definition.className.startsWith("#") && classPrefix === ".") {
+                    completionItem.filterText = completionClassName;
+                    completionItem.insertText = completionClassName;
+                } else if (classPrefix === ".") {
+                    completionItem.filterText = completionClassName;
+                    completionItem.insertText = completionClassName;
                 }
                 if (loadFiles !== undefined && loadFiles.length > 0) {
                     const markdownDoc = new MarkdownString(
@@ -311,13 +320,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
     ["slim"].forEach((extension) => {
         // tslint:disable-next-line:max-line-length
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\#|\.)[^\s]*$/i, ""));
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\B#\S+)[^\s]*$/i, ""));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\B#\S+)[^\s]*$/i, "#"));
     });
     // CSS/SCSS based vice-versa extensions
     ["css", "sass", "scss"].forEach((extension) => {
         // tslint:disable-next-line:max-line-length
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.|\#)[^\s]*$/i, "."));
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /[^\s]*$/i, "#", "#"));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\.)[^\s]*$/i, "."));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(\#)[^\s]*$/i, "#"));
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /@apply ([\.\w- ]*$)/, "."));
     });
 
