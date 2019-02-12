@@ -1,6 +1,6 @@
 ### v1.5.6
 
-* Fixed: Multiple occurences...
+* Fixed: Multiple occurrences...
   
 ### v1.5.5
 
