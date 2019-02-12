@@ -194,7 +194,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 const completionItem = new CompletionItem(className, CompletionItemKind.Variable);
                 const completionClassName = `${classPrefix}${className}`;
 
-                const loadFiles = selectors[className];
+                let loadFiles = selectors[className];
 
                 let classPrefixOriginal: string = "#";
                 if (definition.className.startsWith("#")) {
@@ -209,10 +209,9 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 } else if (!definition.className.startsWith("#") && classPrefix === ".") {
                     completionItem.filterText = completionClassName;
                     completionItem.insertText = completionClassName;
-                } else if (classPrefix === ".") {
-                    completionItem.filterText = completionClassName;
-                    completionItem.insertText = completionClassName;
                 }
+                loadFiles = _.uniqBy(loadFiles, (file) => file.fsPath );
+
                 if (loadFiles !== undefined && loadFiles.length > 0) {
                     const markdownDoc = new MarkdownString(
                         "`" + classPrefixOriginal + className + "`\r\n\r\n" +
