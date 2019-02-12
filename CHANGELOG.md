@@ -1,3 +1,12 @@
+### v1.5.6
+
+* Fixed: Multiple occurences...
+  
+### v1.5.5
+
+* Added: PHP parser
+* Added: Separate ID and Class completion.
+
 ### v1.5.4
 
 * Fixed: PHP and SCSS find usages
