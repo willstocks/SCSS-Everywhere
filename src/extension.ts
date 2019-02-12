@@ -38,7 +38,7 @@ let selectors: ISelectorObject = {};
 
 let definitions: CssClassDefinition[] = [];
 const emmetDisposables: Array<{ dispose(): any }> = [];
-const searchForIn: string[] = [".latte", ".twig", ".html", ".slim", ".php", ".scss"];
+let searchForIn: string[] = [".latte", ".twig", ".html", ".slim", ".php", ".scss"];
 
 // hack into it
 function endsWithAny(suffixes: string[], str: string) {
@@ -95,6 +95,16 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                     notifier.notify("eye", "Looking for CSS classes in the workspace... (" + progress + "%)", false);
                 }
             }, { concurrency: 30 });
+
+            const isScssEnabled = workspace.getConfiguration()
+                    .get<boolean>("html-css-class-completion.enableScssFindUsage");
+
+            if (!isScssEnabled) {
+                const scssIndex: number = searchForIn.indexOf(".scss");
+                if (scssIndex >= 0) {
+                    searchForIn = searchForIn.slice(scssIndex, 1);
+                }
+            }
 
             if (!rewamp) {
                 snapshot = Object.assign({}, files);

@@ -83,6 +83,14 @@ You can change the folders and files the extension will consider or exclude duri
 	...
 ```
 
+#### SCSS Find usage and slowness
+
+When we include SCSS files to fshow usages, IntelliSense can be slow. This is `false` by default. To enable (you've been warned) this set this setting to true ands restart (required):
+
+```
+  "html-css-class-completion.enableScssFindUsage": true,
+```
+
 #### Emmet
 
 Emmet support comes disabled by default, the reason behind this choice is because it the current implementation simply triggers completion when you type a "." (period) and this behavior might be considered a little annoying, but it might change in the future.

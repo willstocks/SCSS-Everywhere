@@ -1,3 +1,11 @@
+### v1.5.10
+
+* Fixed: Slow intellisense due to SCSS usage indexing. Disabled by default try this to enable:
+
+```
+  "html-css-class-completion.enableScssFindUsage": true,
+```
+  
 ### v1.5.9
 
 * Fixed: Multiline ids are not processed due to wrong variable executed in second.
