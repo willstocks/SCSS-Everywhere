@@ -1,3 +1,7 @@
+### v1.5.12
+
+* Fixed: parse single and double quotes.
+  
 ### v1.5.11
 
 * Fixed: New `enableScssFindUsage` setting was mis-behaving. Now it is fixed.
