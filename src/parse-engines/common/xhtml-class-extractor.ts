@@ -7,9 +7,8 @@ export default class XhtmlClassExtractor {
      * @description Extracts class names from CSS AST
      */
     public static extract(html: string): CssClassDefinition[] {
-        const classNameRegex: RegExp = /(?<=(class|className)=\")[^"]+(?=\")/ig;
-        const idRegex: RegExp = /(?<=(id)=\")[^"]+(?=\")/ig;
-
+        const classNameRegex: RegExp = /(class|className)=["']([^"']+)["']/ig;
+        const idRegex: RegExp = /(id)=["']([^"']+)["']/ig;
         let item: RegExpExecArray = classNameRegex.exec(html);
         let itemIds: RegExpExecArray = idRegex.exec(html);
 
@@ -17,12 +16,12 @@ export default class XhtmlClassExtractor {
         const ids: string[] = [];
 
         while (item) {
-            classes.push(item[0]);
+            classes.push(item[2]);
             item = classNameRegex.exec(html);
         }
 
         while (itemIds) {
-            ids.push(itemIds[0]);
+            ids.push(itemIds[2]);
             itemIds = idRegex.exec(html);
         }
 
