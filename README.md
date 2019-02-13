@@ -43,6 +43,10 @@ Both directions (from CSS/SCSS to HTML, Latte... or from HTML, Latte to CSS/SCSS
 * "className" and "class" in TypeScript React, JavaScript and JavaScript React language modes
 * Emmet abbreviations support triggered by typing a "." (comes disabled by default, check the User Settings topic for more information)
 
+## Incremental Build
+
+We introduced incremental build. In previous versions we need to re-cache all workspace for update cache. This causes high CPU and unnecessary delay to our development time. Hence, we introduced this feature. Once you open your VSCode workspace, initial scan will be made and all upcoming changes will be incrementally and instantly reflected to cache.
+
 ## Contributions
 You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/Zignd/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
 
