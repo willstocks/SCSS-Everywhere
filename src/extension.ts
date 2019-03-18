@@ -106,7 +106,11 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             if (!rewamp) {
                 snapshot = Object.assign({}, files);
                 for (const path of Object.keys(files)) {
-                    Array.prototype.push.apply(definitions, files[path].selectors);
+                    try {
+                        Array.prototype.push.apply(definitions, files[path].selectors);
+                    } catch (err) {
+                        continue;
+                    }
                     if (endsWithAny(searchForIn, path)) {
                         files[path].selectors.map((definition) => {
                             const className: string = definition.className.replace("#", "").replace(".", "");

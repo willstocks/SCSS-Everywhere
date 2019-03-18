@@ -1,3 +1,7 @@
+### v1.5.13
+
+* Fixed: stack size error. (continue on error)
+  
 ### v1.5.12
 
 * Fixed: parse single and double quotes.
