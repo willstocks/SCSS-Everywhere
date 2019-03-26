@@ -1,3 +1,7 @@
+### v1.5.14
+
+* Revert: revert .slim trigger char
+  
 ### v1.5.13
 
 * Fixed: stack size error. (continue on error)

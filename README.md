@@ -29,8 +29,8 @@ ID Support:
 * TypeScript React (.tsx)
 * Vue (.vue) [requires [octref.vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)]
 * Twig
-* Slim
-* Latte
+* Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=gencer.html-slim-scss-css-class-completion)]
+* Latte [requires **Latte** extension]
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
