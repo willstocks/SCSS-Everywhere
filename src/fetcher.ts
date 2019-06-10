@@ -23,8 +23,8 @@ class Fetcher {
         const excludeGlobPattern = configuration.get("html-css-class-completion.excludeGlobPattern");
         const remoteStyleSheets = configuration.get<Array<string>>("html-css-class-completion.remoteStyleSheets");
 
-        var paths;
-        var localFiles = await vscode.workspace.findFiles(`${includeGlobPattern}`, `${excludeGlobPattern}`);
+        let paths;
+        let localFiles = await vscode.workspace.findFiles(`${includeGlobPattern}`, `${excludeGlobPattern}`);
 
         if (remoteStyleSheets.length > 0) {
             const folder = path.join(os.tmpdir(), "html_css_slim");
@@ -41,12 +41,12 @@ class Fetcher {
                         method: 'GET',
                         port: 443
                     }, function (response) {
-                        var file = fs.createWriteStream(path.join(folder, filename));
+                        const file = fs.createWriteStream(path.join(folder, filename));
                         response.pipe(file);
                     });
                 } else {
                     http.get(remoteFile, function (response) {
-                        var file = fs.createWriteStream(path.join(folder, filename));
+                        const file = fs.createWriteStream(path.join(folder, filename));
                         response.pipe(file);
                     });
                 }

@@ -1,3 +1,15 @@
+### v1.5.17
+
+* Separate ID and Class definitions on templates. This will only list either IDs or classes according to tag name.
+  
+### v1.5.16
+
+* Used SCSS parser for CSS due to some classes are not located on boostrap or custom built css files. (Especially on minified ones)
+
+### v1.5.15
+
+* Fixed double period issue on `.slim` files
+
 ### v1.5.14
 
 * Revert: revert .slim trigger char

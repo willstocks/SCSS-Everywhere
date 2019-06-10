@@ -203,21 +203,24 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
             const completionItems = uniqueDefinitions.map((definition) => {
                 const className = definition.className.replace(".", "").replace("#", "");
                 const completionItem = new CompletionItem(className, CompletionItemKind.Variable);
-                const completionClassName = `${classPrefix}${className}`;
+                let completionClassName = `${classPrefix}${className}`;
 
                 let loadFiles = selectors[className];
 
                 let classPrefixOriginal: string = "#";
-                if (definition.className.startsWith("#")) {
+                if (definition.className.startsWith("#") || classPrefix === "#") {
                     completionItem.kind = CompletionItemKind.Method;
                 } else {
                     classPrefixOriginal = ".";
                 }
-
+                
                 if (definition.className.startsWith("#") && classPrefix === "#") {
                     completionItem.filterText = completionClassName;
                     completionItem.insertText = completionClassName;
                 } else if (!definition.className.startsWith("#") && classPrefix === ".") {
+                    completionItem.filterText = completionClassName;
+                    completionItem.insertText = completionClassName;
+                } else if (classPrefix !== "#") {
                     completionItem.filterText = completionClassName;
                     completionItem.insertText = completionClassName;
                 }
@@ -323,7 +326,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
     // HTML based extensions
     // tslint:disable-next-line:max-line-length
     ["slim", "html", "latte", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs"].forEach((extension) => {
-        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|id|className)=["|']([^"^']*$)/i));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|className)=["|']([^"^']*$)/i));
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(id)=["|']([^"^']*$)/i, "#"));
     });
 
     // SLIM based extensions
