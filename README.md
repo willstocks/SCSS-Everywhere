@@ -18,6 +18,10 @@ ID Support:
 * Supports external stylesheets referenced through `link` elements in HTML files
 * Command to manually re-cache the class definitions used in the autocompletion
 * User Settings to override which folders and files should be considered or excluded from the caching process
+* Incremental build
+* Slim template support
+* Both-way `SCSS` support
+* Separate `class` and `id` support
 
 ## Supported Language Modes
 * HTML
