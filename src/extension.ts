@@ -108,20 +108,22 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                 for (const path of Object.keys(files)) {
                     try {
                         Array.prototype.push.apply(definitions, files[path].selectors);
-                        if (endsWithAny(searchForIn, path)) {
-                            files[path].selectors.map((definition) => {
-                                const className: string = definition.className.replace("#", "").replace(".", "");
-                                if (!selectors[className]) {
-                                    selectors[className] = [];
-                                }
-                                if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
-                                    selectors[className].push(files[path].uri);
-                                }
 
-                            });
-                        }
                     } catch (err) {
                         continue;
+                    }
+
+                    if (endsWithAny(searchForIn, path)) {
+                        files[path].selectors.map((definition) => {
+                            const className: string = definition.className.replace("#", "").replace(".", "");
+                            if (!selectors[className]) {
+                                selectors[className] = [];
+                            }
+                            if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
+                                selectors[className].push(files[path].uri);
+                            }
+
+                        });
                     }
 
                 }
