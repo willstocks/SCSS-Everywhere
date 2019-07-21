@@ -1,3 +1,7 @@
+### v1.5.19
+
+* Maintenance release
+  
 ### v1.5.18
 
 * Fixed #38

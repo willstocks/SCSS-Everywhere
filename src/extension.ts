@@ -119,8 +119,12 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                             if (!selectors[className]) {
                                 selectors[className] = [];
                             }
-                            if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
-                                selectors[className].push(files[path].uri);
+                            try {
+                                if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
+                                    selectors[className].push(files[path].uri);
+                                }
+                            } catch (ex) {
+                                // move on...
                             }
 
                         });
