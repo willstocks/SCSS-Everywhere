@@ -1,3 +1,7 @@
+### v1.5.20
+
+* Using webpack to minimize output and load faster. See #39.
+
 ### v1.5.19
 
 * Maintenance release
