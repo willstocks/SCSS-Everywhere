@@ -1,3 +1,7 @@
+### v1.5.18
+
+* Fixed #38
+  
 ### v1.5.17
 
 * Separate ID and Class definitions on templates. This will only list either IDs or classes according to tag name.
