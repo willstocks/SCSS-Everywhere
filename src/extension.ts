@@ -211,7 +211,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
             const completionItems = uniqueDefinitions.map((definition) => {
                 const className = definition.className.replace(".", "").replace("#", "");
                 const completionItem = new CompletionItem(className, CompletionItemKind.Variable);
-                let completionClassName = `${classPrefix}${className}`;
+                const completionClassName = `${classPrefix}${className}`;
 
                 let loadFiles = selectors[className];
 
@@ -232,17 +232,19 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                     completionItem.filterText = completionClassName;
                     completionItem.insertText = completionClassName;
                 }
-                loadFiles = _.uniqBy(loadFiles, (file) => file.fsPath);
+                loadFiles = _.uniqBy(loadFiles, (file) => file ? file.fsPath : null);
 
-                if (loadFiles !== undefined && loadFiles.length > 0) {
+                if (loadFiles !== undefined && loadFiles && loadFiles.length > 0) {
                     const markdownDoc = new MarkdownString(
                         "`" + classPrefixOriginal + className + "`\r\n\r\n" +
                         loadFiles.length + " occurences in files:\r\n\r\n",
                     );
                     const basePath: string = vscode.workspace.rootPath;
                     loadFiles.forEach((value) => {
-                        const path = value.fsPath.replace(basePath, "");
-                        markdownDoc.appendMarkdown("\r\n\r\n[" + path + "](" + value.path + ")");
+                        const path = value ? value.fsPath.replace(basePath, "") : null;
+                        if (path) {
+                            markdownDoc.appendMarkdown("\r\n\r\n[" + path + "](" + value.path + ")");
+                        }
                     });
                     completionItem.documentation = markdownDoc;
                 }
