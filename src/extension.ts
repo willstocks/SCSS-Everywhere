@@ -111,7 +111,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                         if (endsWithAny(searchForIn, path)) {
                             files[path].selectors.map((definition) => {
                                 const className: string = definition.className.replace("#", "").replace(".", "");
-                                if (selectors[className] === undefined) {
+                                if (!selectors[className]) {
                                     selectors[className] = [];
                                 }
                                 if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
@@ -146,7 +146,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                         }
                         defs.map((definition) => {
                             const className: string = definition.className.replace("#", "").replace(".", "");
-                            if (selectors[className] === undefined) {
+                            if (!selectors[className]) {
                                 selectors[className] = [];
                             }
                             if (selectors[className] && selectors[className].indexOf(current) === -1) {
