@@ -97,7 +97,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             }, { concurrency: 30 });
 
             const isScssEnabled = workspace.getConfiguration()
-                    .get<boolean>("html-css-class-completion.enableScssFindUsage");
+                .get<boolean>("html-css-class-completion.enableScssFindUsage");
 
             if (!isScssEnabled && searchForIn.indexOf(".scss") >= 0) {
                 searchForIn.pop();
@@ -108,20 +108,22 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                 for (const path of Object.keys(files)) {
                     try {
                         Array.prototype.push.apply(definitions, files[path].selectors);
+                        if (endsWithAny(searchForIn, path)) {
+                            files[path].selectors.map((definition) => {
+                                const className: string = definition.className.replace("#", "").replace(".", "");
+                                if (selectors[className] === undefined) {
+                                    selectors[className] = [];
+                                }
+                                if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
+                                    selectors[className].push(files[path].uri);
+                                }
+
+                            });
+                        }
                     } catch (err) {
                         continue;
                     }
-                    if (endsWithAny(searchForIn, path)) {
-                        files[path].selectors.map((definition) => {
-                            const className: string = definition.className.replace("#", "").replace(".", "");
-                            if (selectors[className] === undefined) {
-                                selectors[className] = [];
-                            }
-                            if (selectors[className].indexOf(files[path].uri) === -1) {
-                                selectors[className].push(files[path].uri);
-                            }
-                        });
-                    }
+
                 }
             } else {
                 Array.prototype.push.apply(definitions, defs);
@@ -147,7 +149,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                             if (selectors[className] === undefined) {
                                 selectors[className] = [];
                             }
-                            if (selectors[className].indexOf(current) === -1) {
+                            if (selectors[className] && selectors[className].indexOf(current) === -1) {
                                 selectors[className].push(current);
                             }
                             snapshot[current.fsPath] = files[current.fsPath];
@@ -181,7 +183,7 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
 }
 
 function provideCompletionItemsGenerator(languageSelector: string, classMatchRegex: RegExp,
-                                         classPrefix: string = "", splitChar: string = " ") {
+    classPrefix: string = "", splitChar: string = " ") {
     return languages.registerCompletionItemProvider(languageSelector, {
         provideCompletionItems(document: TextDocument, position: Position): CompletionItem[] {
             const start: Position = new Position(position.line, 0);
@@ -213,7 +215,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                 } else {
                     classPrefixOriginal = ".";
                 }
-                
+
                 if (definition.className.startsWith("#") && classPrefix === "#") {
                     completionItem.filterText = completionClassName;
                     completionItem.insertText = completionClassName;
@@ -224,7 +226,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
                     completionItem.filterText = completionClassName;
                     completionItem.insertText = completionClassName;
                 }
-                loadFiles = _.uniqBy(loadFiles, (file) => file.fsPath );
+                loadFiles = _.uniqBy(loadFiles, (file) => file.fsPath);
 
                 if (loadFiles !== undefined && loadFiles.length > 0) {
                     const markdownDoc = new MarkdownString(
