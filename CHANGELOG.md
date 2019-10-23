@@ -1,3 +1,8 @@
+### v1.5.21
+
+* Find template usages disabled by default now. To enable it activate `enableFindUsage` option. This will drastically slow down your environment.
+* Added `*.eex` language mode.
+
 ### v1.5.20
 
 * Using webpack to minimize output and load faster. See #39.

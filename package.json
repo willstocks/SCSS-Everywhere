@@ -2,7 +2,7 @@
   "name": "html-slim-scss-css-class-completion",
   "displayName": "IntelliSense for CSS, SCSS class names in HTML, Slim and SCSS",
   "description": ":class and :id completion for HTML, Latte, Slim, PHP, ERB, Javascript, CSS and SCSS. Just declare class in your template and see it in your CSS/SCSS file. (Both ways)",
-  "version": "1.5.20",
+  "version": "1.5.21",
   "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"
@@ -52,6 +52,11 @@
             "default": false,
             "description": "Enables find usage inspection for SCSS files. It can be slow for intellisense."
           },
+          "html-css-class-completion.enableFindUsage": {
+            "type": "boolean",
+            "default": false,
+            "description": "Enables find usage inspection for template files. It can be slow for intellisense."
+          },
           "html-css-class-completion.remoteStyleSheets": {
             "type": "array",
             "default": [],
@@ -68,14 +73,14 @@
   "main": "./dist/extension",
   "scripts": {
     "vscode:prepublish": "webpack --mode production",
-    "compile": "webpack --mode none",
-    "watch": "webpack --mode none --watch",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
     "test-compile": "tsc -p ./"
   },
   "devDependencies": {
     "@types/bluebird": "^3.5.19",
     "@types/css": "^0.0.31",
-    "@types/htmlparser2": "^3.7.31",
+    "@types/htmlparser2": "^3.7.2",
     "@types/lodash": "^4.14.92",
     "@types/mocha": "^2.2.46",
     "@types/node": "^7.0.52",

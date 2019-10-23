@@ -91,7 +91,7 @@ You can change the folders and files the extension will consider or exclude duri
 	...
 ```
 
-#### SCSS Find usage and slowness
+#### SCSS Find usage
 
 When we include SCSS files to show usages, IntelliSense can be slow. This is `false` by default. To enable (you've been warned) set this setting to true and restart (required):
 
@@ -99,11 +99,19 @@ When we include SCSS files to show usages, IntelliSense can be slow. This is `fa
   "html-css-class-completion.enableScssFindUsage": true,
 ```
 
+#### Template usage
+
+When we include Template files to show usages, IntelliSense can be **very** slow. This is `false` by default. To enable (you've been warned) set this setting to true and restart (required):
+
+```
+  "html-css-class-completion.enableFindUsage": true,
+```
+
 #### Emmet
 
 Emmet support comes disabled by default, the reason behind this choice is because it the current implementation simply triggers completion when you type a "." (period) and this behavior might be considered a little annoying, but it might change in the future.
 
-Currently it supports the following languages (those are [language identifier](https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers)): "html", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs", "slim", "typescriptreact", "javascript", "javascriptreact".
+Currently it supports the following languages (those are [language identifier](https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers)): "html", "eex", "latte", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs", "slim", "typescriptreact", "javascript", "javascriptreact".
 
 * `"html-css-class-completion.enableEmmetSupport"` (default: `false`)
 
