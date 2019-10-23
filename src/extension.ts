@@ -99,6 +99,9 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
             const isScssEnabled = workspace.getConfiguration()
                 .get<boolean>("html-css-class-completion.enableScssFindUsage");
 
+            const isFindingEnabled = workspace.getConfiguration()
+                .get<boolean>("html-css-class-completion.enableFindUsage");
+
             if (!isScssEnabled && searchForIn.indexOf(".scss") >= 0) {
                 searchForIn.pop();
             }
@@ -113,54 +116,59 @@ async function cache(uris: Uri[], silent: boolean = false): Promise<void> {
                         continue;
                     }
 
-                    if (endsWithAny(searchForIn, path)) {
-                        files[path].selectors.map((definition) => {
-                            const className: string = definition.className.replace("#", "").replace(".", "");
-                            if (!selectors[className]) {
-                                selectors[className] = [];
-                            }
-                            try {
-                                if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
-                                    selectors[className].push(files[path].uri);
+                    if (isFindingEnabled) {
+                        if (endsWithAny(searchForIn, path)) {
+                            for (const definition of files[path].selectors) {
+                                const className: string = definition.className.replace("#", "").replace(".", "");
+                                if (!selectors[className]) {
+                                    selectors[className] = [];
                                 }
-                            } catch (ex) {
-                                // move on...
-                            }
+                                try {
+                                    if (selectors[className] && selectors[className].indexOf(files[path].uri) === -1) {
+                                        selectors[className].push(files[path].uri);
+                                    }
+                                } catch (ex) {
+                                    // move on...
+                                }
 
-                        });
+                            }
+                        }
                     }
 
                 }
             } else {
-                Array.prototype.push.apply(definitions, defs);
-                const current: Uri = uris[0];
-                if (endsWithAny(searchForIn, uris[0].path)) {
-                    if (defs) {
-                        if (snapshot[current.fsPath] !== undefined) {
-                            snapshot[current.fsPath].selectors.map((element) => {
-                                const className: string = element.className.replace("#", "").replace(".", "");
-                                if (selectors[className] !== undefined &&
-                                    selectors[className].length === 1) {
-                                    const indexElem: number = definitions.indexOf(element);
-                                    if (indexElem !== -1) {
-                                        definitions.splice(indexElem, 1);
-                                        selectors[className] = [];
+
+                if (isFindingEnabled) {
+                    Array.prototype.push.apply(definitions, defs);
+                    const current: Uri = uris[0];
+                    if (endsWithAny(searchForIn, uris[0].path)) {
+                        if (defs) {
+                            if (snapshot[current.fsPath] !== undefined) {
+                                for (const element of snapshot[current.fsPath].selectors) {
+                                    const className: string = element.className.replace("#", "").replace(".", "");
+                                    if (selectors[className] !== undefined &&
+                                        selectors[className].length === 1) {
+                                        const indexElem: number = definitions.indexOf(element);
+                                        if (indexElem !== -1) {
+                                            definitions.splice(indexElem, 1);
+                                            selectors[className] = [];
+                                        }
                                     }
+
                                 }
+                            }
+                            for (const definition of defs) {
+                                const className: string = definition.className.replace("#", "").replace(".", "");
+                                if (!selectors[className]) {
+                                    selectors[className] = [];
+                                }
+                                if (selectors[className] && selectors[className].indexOf(current) === -1) {
+                                    selectors[className].push(current);
+                                }
+                                snapshot[current.fsPath] = files[current.fsPath];
+                            }
 
-                            });
                         }
-                        defs.map((definition) => {
-                            const className: string = definition.className.replace("#", "").replace(".", "");
-                            if (!selectors[className]) {
-                                selectors[className] = [];
-                            }
-                            if (selectors[className] && selectors[className].indexOf(current) === -1) {
-                                selectors[className].push(current);
-                            }
-                            snapshot[current.fsPath] = files[current.fsPath];
-                        });
-
                     }
                 }
             }
@@ -268,7 +276,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
 
 function enableEmmetSupport(disposables: Disposable[]) {
     const emmetRegex = /(?=\.)([\w-\. ]*$)/;
-    const languageModes = ["slim", "html", "razor", "php", "latte", "blade", "vue", "twig", "markdown", "erb",
+    const languageModes = ["slim", "eex", "html", "razor", "php", "latte", "blade", "vue", "twig", "markdown", "erb",
         "handlebars", "ejs", "typescriptreact", "javascript", "javascriptreact", "scss", "sass", "css"];
     languageModes.forEach((language) => {
         emmetDisposables.push(provideCompletionItemsGenerator(language, emmetRegex, "", "."));
@@ -284,7 +292,7 @@ function disableEmmetSupport(disposables: Disposable[]) {
 export async function activate(context: ExtensionContext): Promise<void> {
     const disposables: Disposable[] = [];
     const onSave = vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
-        if (["twig", "html", "latte", "slim", "xhtml", "css", "scss"].indexOf(e.languageId) > -1) {
+        if (["twig", "erb", "eex", "html", "latte", "slim", "xhtml", "css", "scss"].indexOf(e.languageId) > -1) {
             cache([e.uri], true);
         }
     });
@@ -335,7 +343,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // HTML based extensions
     // tslint:disable-next-line:max-line-length
-    ["slim", "html", "latte", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs"].forEach((extension) => {
+    ["slim", "html", "eex", "latte", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs"].forEach((extension) => {
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|className)=["|']([^"^']*$)/i));
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(id)=["|']([^"^']*$)/i, "#"));
     });

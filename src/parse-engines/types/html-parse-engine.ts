@@ -2,7 +2,6 @@ import * as Bluebird from "bluebird";
 import * as css from "css";
 import * as html from "htmlparser2";
 import * as request from "request-promise";
-import * as vscode from "vscode";
 import CssClassDefinition from "../../common/css-class-definition";
 import CssClassExtractor from "../common/css-class-extractor";
 import IParseEngine from "../common/parse-engine";
@@ -24,15 +23,15 @@ class HtmlParseEngine implements IParseEngine {
         definitions = XhtmlClassExtractor.extract(code);
 
         const parser = new html.Parser({
-            onattribute: (name: string, value: string) => {
-                if (name === "rel" && value === "stylesheet") {
-                    isRelStylesheet = true;
-                }
-
-                if (tag === "link" && name === "href" && value.indexOf("http") === 0) {
-                    linkHref = value;
-                }
-            },
+            /* onattribute: (name: string, value: string) => {
+                 if (name === "rel" && value === "stylesheet") {
+                     isRelStylesheet = true;
+                 }
+ 
+                 if (tag === "link" && name === "href" && value.indexOf("http") === 0) {
+                     linkHref = value;
+                 }
+             },*/
             onclosetag: () => {
                 if (tag === "link" && isRelStylesheet && linkHref) {
                     urls.push(linkHref);
@@ -41,9 +40,9 @@ class HtmlParseEngine implements IParseEngine {
                 isRelStylesheet = false;
                 linkHref = null;
             },
-            onopentagname: (name: string) => {
-                tag = name;
-            },
+            // onopentagname: (name: string) => {
+            //     tag = name;
+            // },
             ontext: (text: string) => {
                 if (tag === "style") {
                     definitions.push(...CssClassExtractor.extract(css.parse(text)));

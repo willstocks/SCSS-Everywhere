@@ -6,6 +6,7 @@ import LatteParseEngine from "./types/latte-parse-engine";
 import PhpParseEngine from "./types/php-parse-engine";
 import ScssParseEngine from "./types/scss-parse-engine";
 import SlimParseEngine from "./types/slim-parse-engine";
+import EexParseEngine from "./types/eex-parse-engine";
 
 class ParseEngineRegistry {
     public static getParseEngine(languageId: string): IParseEngine {
@@ -30,6 +31,7 @@ class ParseEngineRegistry {
     private static registry: IParseEngine[] = [
         new CssParseEngine(),
         new LatteParseEngine(),
+        new EexParseEngine(),
         new ScssParseEngine(),
         new HtmlParseEngine(),
         new SlimParseEngine(),
