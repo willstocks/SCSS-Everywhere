@@ -1,5 +1,9 @@
 ### v1.5.22
 
+* Fixed #48.
+
+### v1.5.22
+
 * Added `*.svelte` language mode.
 * Better parsing method. This will eliminate hex colors and other unwanted elements from being listed.
 * Added `doc,docs,vendor,.bundle` dirs to default exclude
