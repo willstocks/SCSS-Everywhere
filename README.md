@@ -1,4 +1,4 @@
-# IntelliSense for CSS, SCSS class and ID names in HTML, Latte, Slim...
+# SCSS Everywhere
 
 > Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Otherwise, things can happen.
 
@@ -18,10 +18,10 @@ ID Support:
 * Supports external stylesheets referenced through `link` elements in HTML files
 * Command to manually re-cache the class definitions used in the autocompletion
 * User Settings to override which folders and files should be considered or excluded from the caching process
-* Incremental build
-* Slim, Eex and Svelte template support
+* Incremental build. You do not need to re-cache everytime.
+* Additional **Slim, Eex and Svelte** template support
 * Both-way `SCSS` support
-* Separate `class` and `id` support
+* Separate `class` and `id` support **Work in progress.**
 
 ## Supported Language Modes
 * HTML
@@ -50,18 +50,10 @@ Both directions (from CSS/SCSS to HTML, Latte... or from HTML, Latte to CSS/SCSS
 
 ## Incremental Build
 
-We introduced incremental build. In previous versions we need to re-cache all workspace for update cache. This causes high CPU and unnecessary delay to our development time. Hence, we introduced this feature. Once you open your VSCode workspace, initial scan will be made and all upcoming changes will be incrementally and instantly reflected to cache.
+We introduced incremental build. In previous versions we had to re-cache all workspace to reflect our atomic changes. This causes high CPU usage and unnecessary delay to our development time. Hence, we introduced this feature. Once you open your VSCode workspace, initial scan will be made and all upcoming changes will be incrementally and instantly reflected to the cache.
 
 ## Contributions
 You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/Zignd/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
-
-## What's new in this fork:
-* Added SCSS/SASS support without compiling whole package.
-* Ability to parse custom and magic functions
-* Ability to get remote css files such as bootstrap. Remote CSS files will appended to temp dir of your OS.
-* Ability to see *Classes* and *IDs* from *.html and .slim* in *CSS and SCSS* files. 
-
-When you work on `.slim`, whenever you press `.` *dot*, it will show you all relative class names. Addition to that also `class=""` tags are supported.
 
 For SCSS part, I have manually strip comments and do regexp on code. In this way I also able to locate magic methods/classes. For example; If you have `.u-pb-{class}` this extension will show you `.u-pb-` and leave it `class` name filled by you.
 
