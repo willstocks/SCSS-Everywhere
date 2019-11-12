@@ -1,3 +1,9 @@
+### v1.5.22
+
+* Added `*.svelte` language mode.
+* Better parsing method. This will eliminate hex colors and other unwanted elements from being listed.
+* Added `doc,docs,vendor,.bundle` dirs to default exclude
+
 ### v1.5.21
 
 * Find template usages disabled by default now. To enable it activate `enableFindUsage` option. This will drastically slow down your environment.

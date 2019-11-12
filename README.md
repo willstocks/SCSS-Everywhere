@@ -19,7 +19,7 @@ ID Support:
 * Command to manually re-cache the class definitions used in the autocompletion
 * User Settings to override which folders and files should be considered or excluded from the caching process
 * Incremental build
-* Slim template support
+* Slim, Eex and Svelte template support
 * Both-way `SCSS` support
 * Separate `class` and `id` support
 
@@ -35,6 +35,7 @@ ID Support:
 * Twig
 * Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=sianglim.slim)]
 * Latte [requires **Latte** extension]
+* Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=JamesBirtles.svelte-vscode)]
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars

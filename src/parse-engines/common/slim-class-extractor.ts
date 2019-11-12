@@ -7,12 +7,13 @@ export default class SlimClassExtractor {
      * @description Extracts class names from CSS AST
      */
     public static extract(scss: string): CssClassDefinition[] {
-        const classNameRegex: RegExp = /[.|\#]([\w-]+)/g;
+        const classNameRegex: RegExp = /[.|\#]-?[_a-zA-Z]+[_a-zA-Z0-9-]*(?=(?:(?:[^"']*"[^"']*")|(?:[^'"]*'[^'"]*'))*[^"']*$)/g;
+
         const definitions: CssClassDefinition[] = [];
 
         let item: RegExpExecArray = classNameRegex.exec(scss);
         while (item) {
-            definitions.push(new CssClassDefinition(item[1]));
+            definitions.push(new CssClassDefinition(item[0]));
             item = classNameRegex.exec(scss);
         }
 
