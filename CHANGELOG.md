@@ -1,3 +1,7 @@
+### v1.6.0
+
+* Add support for dynamic imports See #49.
+
 ### v1.5.22
 
 * Fixed #48.
