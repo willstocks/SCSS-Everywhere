@@ -86,6 +86,7 @@ class Fetcher {
       if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
       }
+      const paths: vscode.Uri[] = []
       for (const remoteFile of remoteStyleSheets) {
         try {
           const filename = this.getFilename(remoteFile);
@@ -109,15 +110,13 @@ class Fetcher {
               response.pipe(file);
             });
           }
+          const found = await vscode.workspace.findFiles(path.join(folder, filename));
+          paths.concat(found);
         } catch (ex) {
           console.log('Invalid URL or failed to get content', ex);
           continue;
         }
       }
-
-      const relativePattern = new vscode.RelativePattern(folder, "*.css");
-      paths = await vscode.workspace.findFiles(relativePattern);
-
       for (let parsedFile of paths) {
         localFiles[localFiles.length] = parsedFile;
       }
