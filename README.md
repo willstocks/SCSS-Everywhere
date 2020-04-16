@@ -75,15 +75,28 @@ You can change the folders and files the extension will consider or exclude duri
 
 * `"html-css-class-completion.includeGlobPattern"` (default: `"**/*.{css,scss,sass,html}"`)
 * `"html-css-class-completion.excludeGlobPattern"` (default: `""`)
+* `"html-css-class-completion.searchRemoteGlobPattern"` (default: `""`)
 * `"html-css-class-completion.remoteStyleSheets"`  (default: `[]`)
 
 #### Remote Files
 ```
-    ...
+  ...
 	"html-css-class-completion.remoteStyleSheets": [
 		"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
 	],
 	...
+```
+
+**UPDATE**: Now it's possible to parse remote stylesheets links from HTML, Smarty, EEX and other HTML-compatible files via meta tags. Just enable `searchRemoteGlobPattern` and everytime you open workspace, extension will scan and parse those remote files for you.
+
+Example:
+
+```
+{
+  ...
+  "html-css-class-completion.searchRemoteGlobPattern": "**/*.{svelte,tpl,latte,php,html,twig}",
+  ...
+}
 ```
 
 #### SCSS Find usage
