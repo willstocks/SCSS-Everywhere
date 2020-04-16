@@ -58,7 +58,8 @@ class Fetcher {
       "html-css-class-completion.remoteStyleSheets"
     );
 
-    let paths;
+    const paths: vscode.Uri[] = []
+    
     const localFiles = await vscode.workspace.findFiles(
       `${includeGlobPattern}`,
       `${excludeGlobPattern}`
@@ -86,7 +87,6 @@ class Fetcher {
       if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
       }
-      const paths: vscode.Uri[] = []
       for (const remoteFile of remoteStyleSheets) {
         try {
           const filename = this.getFilename(remoteFile);
