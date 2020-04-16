@@ -41,6 +41,7 @@ ID Support:
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
 * EJS (.ejs)
+* Smarty (.tpl)
 
 Both directions (from CSS/SCSS to HTML, Latte... or from HTML, Latte to CSS/SCSS...) are supported. Only changed parts will be re-indexed so this will give you almost instant auto-completion.
 
