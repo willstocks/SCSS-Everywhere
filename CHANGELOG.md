@@ -1,3 +1,7 @@
+### v1.6.1
+
+* Add support for Smarty. See #50
+
 ### v1.6.0
 
 * Add support for dynamic imports See #49.
