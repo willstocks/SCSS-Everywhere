@@ -73,7 +73,11 @@ class Fetcher {
       const $ = cheerio.load(textDocument.getText());
       // remoteDynamicStyleSheets.push(remote);
       $('link[rel=stylesheet]').each((key, item) => {
-        remoteStyleSheets.push(item.attribs["href"])
+        let url: string = item.attribs["href"]
+        if (url.startsWith('//')) {
+          url = url.replace('//', 'https://');
+        }
+        remoteStyleSheets.push(url);
       })
     }
 
@@ -83,26 +87,31 @@ class Fetcher {
         fs.mkdirSync(folder);
       }
       for (const remoteFile of remoteStyleSheets) {
-        const filename = this.getFilename(remoteFile);
-        const url = new URL(remoteFile);
-        if (url.protocol === "https:") {
-          https.get(
-            {
-              host: url.host,
-              path: url.pathname,
-              method: "GET",
-              port: 443,
-            },
-            function (response) {
+        try {
+          const filename = this.getFilename(remoteFile);
+          const url = new URL(remoteFile);
+          if (url.protocol === "https:") {
+            https.get(
+              {
+                host: url.host,
+                path: url.pathname,
+                method: "GET",
+                port: 443,
+              },
+              function (response) {
+                const file = fs.createWriteStream(path.join(folder, filename));
+                response.pipe(file);
+              }
+            );
+          } else {
+            http.get(remoteFile, function (response) {
               const file = fs.createWriteStream(path.join(folder, filename));
               response.pipe(file);
-            }
-          );
-        } else {
-          http.get(remoteFile, function (response) {
-            const file = fs.createWriteStream(path.join(folder, filename));
-            response.pipe(file);
-          });
+            });
+          }
+        } catch (ex) {
+          console.log('Invalid URL or failed to get content', ex);
+          continue;
         }
       }
 

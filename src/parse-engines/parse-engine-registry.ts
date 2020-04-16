@@ -8,6 +8,7 @@ import ScssParseEngine from "./types/scss-parse-engine";
 import SlimParseEngine from "./types/slim-parse-engine";
 import EexParseEngine from "./types/eex-parse-engine";
 import SvelteParseEngine from "./types/svelte-parse-engine";
+import SmartyParseEngine from "./types/smarty-parse-engine";
 
 class ParseEngineRegistry {
     public static getParseEngine(languageId: string): IParseEngine {
@@ -32,6 +33,7 @@ class ParseEngineRegistry {
     private static registry: IParseEngine[] = [
         new CssParseEngine(),
         new LatteParseEngine(),
+        new SmartyParseEngine(),
         new EexParseEngine(),
         new SvelteParseEngine(),
         new ScssParseEngine(),
