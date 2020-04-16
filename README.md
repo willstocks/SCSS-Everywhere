@@ -19,7 +19,7 @@ ID Support:
 * Command to manually re-cache the class definitions used in the autocompletion
 * User Settings to override which folders and files should be considered or excluded from the caching process
 * Incremental build. You do not need to re-cache everytime.
-* Additional **Slim, Eex and Svelte** template support
+* Additional **Slim, Smarty, Eex and Svelte** template support
 * Both-way `SCSS` support
 * Separate `class` and `id` support **Work in progress.**
 * Automatically parse all remote stylesheets from HTML, Svelte, Twig, Slim and ERB files. **Not yet released**. See: #49 for prebuild image.
@@ -34,6 +34,7 @@ ID Support:
 * TypeScript React (.tsx)
 * Vue (.vue) [requires [octref.vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)]
 * Twig
+* Smarty (.tpl)
 * Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=sianglim.slim)]
 * Latte [requires **Latte** extension]
 * Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=JamesBirtles.svelte-vscode)]
@@ -41,7 +42,6 @@ ID Support:
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
 * EJS (.ejs)
-* Smarty (.tpl)
 
 Both directions (from CSS/SCSS to HTML, Latte... or from HTML, Latte to CSS/SCSS...) are supported. Only changed parts will be re-indexed so this will give you almost instant auto-completion.
 
