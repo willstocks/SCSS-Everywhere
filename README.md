@@ -22,6 +22,7 @@ ID Support:
 * Additional **Slim, Eex and Svelte** template support
 * Both-way `SCSS` support
 * Separate `class` and `id` support **Work in progress.**
+* Automatically parse all remote stylesheets from HTML, Svelte, Twig, Slim and ERB files. **Not yet released**. See: #49 for prebuild image.
 
 ## Supported Language Modes
 * HTML
