@@ -276,7 +276,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
 
 function enableEmmetSupport(disposables: Disposable[]) {
     const emmetRegex = /(?=\.)([\w-\. ]*$)/;
-    const languageModes = ["slim", "eex", "svelte", "html", "razor", "php", "latte", "smarty", "blade", "vue", "twig", "markdown", "erb",
+    const languageModes = ["slim", "HTML (Eex)", "HTML (EEx)", "eex", "svelte", "html", "razor", "php", "latte", "smarty", "blade", "vue", "twig", "markdown", "erb",
         "handlebars", "ejs", "typescriptreact", "javascript", "javascriptreact", "scss", "sass", "css"];
     languageModes.forEach((language) => {
         emmetDisposables.push(provideCompletionItemsGenerator(language, emmetRegex, "", "."));
@@ -292,7 +292,7 @@ function disableEmmetSupport(disposables: Disposable[]) {
 export async function activate(context: ExtensionContext): Promise<void> {
     const disposables: Disposable[] = [];
     const onSave = vscode.workspace.onDidSaveTextDocument((e: vscode.TextDocument) => {
-        if (["twig", "erb", "eex", "html", "latte", "smarty", "slim", "xhtml", "css", "scss"].indexOf(e.languageId) > -1) {
+        if (["twig", "erb", "eex", "HTML (EEx)", "HTML (Eex)", "html", "latte", "smarty", "slim", "xhtml", "css", "scss"].indexOf(e.languageId) > -1) {
             cache([e.uri], true);
         }
     });
@@ -343,7 +343,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
     // HTML based extensions
     // tslint:disable-next-line:max-line-length
-    ["slim", "html", "svelte", "eex", "latte", "smarty", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs"].forEach((extension) => {
+    ["slim", "html", "svelte", "eex", "HTML (EEx)", "HTML (Eex)", "latte", "smarty", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs"].forEach((extension) => {
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(class|className)=["|']([^"^']*$)/i));
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(id)=["|']([^"^']*$)/i, "#"));
     });

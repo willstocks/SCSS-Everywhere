@@ -4,8 +4,8 @@ import IParseEngine from "../common/parse-engine";
 import ISimpleTextDocument from "../common/simple-text-document";
 import XhtmlClassExtractor from "../common/xhtml-class-extractor";
 
-class EexParseEngine implements IParseEngine {
-    public languageId: string = "HTML (Eex)";
+class HeexParseEngine implements IParseEngine {
+    public languageId: string = "HTML (EEx)";
     public extension: string = "eex";
 
     public async parse(textDocument: ISimpleTextDocument): Promise<CssClassDefinition[]> {
@@ -14,4 +14,4 @@ class EexParseEngine implements IParseEngine {
     }
 }
 
-export default EexParseEngine;
+export default HeexParseEngine;

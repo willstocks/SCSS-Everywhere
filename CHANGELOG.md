@@ -1,3 +1,7 @@
+### v1.7.0
+
+* Add support for Elixir's Eex and EEx. See #45. You need vscode-elixir extension for this.
+
 ### v1.6.1
 
 * Add support for Smarty. See #50

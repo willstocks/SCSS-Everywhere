@@ -10,6 +10,7 @@ import * as path from "path";
 import IParseEngine from "./parse-engines/common/parse-engine";
 import ISimpleTextDocument from "./parse-engines/common/simple-text-document";
 import * as cheerio from 'cheerio'
+const fsExtra = require('fs-extra')
 
 class Fetcher {
   private static async readFile(file: string): Promise<string> {
@@ -85,6 +86,8 @@ class Fetcher {
       const folder = path.join(os.tmpdir(), "html_css_slim");
       if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
+      } else {
+        fsExtra.emptyDirSync(folder);
       }
       for (const remoteFile of remoteStyleSheets) {
         try {
