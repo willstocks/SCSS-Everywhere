@@ -57,7 +57,7 @@ Both directions (from CSS/SCSS to HTML, Latte... or from HTML, Latte to CSS/SCSS
 We introduced incremental build. In previous versions we had to re-cache all workspace to reflect our atomic changes. This causes high CPU usage and unnecessary delay to our development time. Hence, we introduced this feature. Once you open your VSCode workspace, initial scan will be made and all upcoming changes will be incrementally and instantly reflected to the cache.
 
 ## Contributions
-You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/Zignd/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
+You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/gencer/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
 
 For SCSS part, I have manually strip comments and do regexp on code. In this way I also able to locate magic methods/classes. For example; If you have `.u-pb-{class}` this extension will show you `.u-pb-` and leave it `class` name filled by you.
 
