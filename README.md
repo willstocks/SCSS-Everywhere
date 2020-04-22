@@ -23,6 +23,7 @@ ID Support:
 * Both-way `SCSS` support
 * Separate `class` and `id` support **Work in progress.**
 * Automatically parse all remote stylesheets from HTML, Svelte, Twig, Slim and ERB files. **Not yet released**. See: #49 for prebuild image.
+* HTML, SCSS, SASS, CSS, Elixir, PHP, Vue, Slim, Latte and many more
 
 ## Supported Language Modes
 * HTML
@@ -38,6 +39,7 @@ ID Support:
 * Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=sianglim.slim)]
 * Latte [requires **Latte** extension]
 * Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=JamesBirtles.svelte-vscode)]
+* Elixir HTML (EEx) and HTML (Eex)
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
@@ -94,7 +96,7 @@ Example:
 ```
 {
   ...
-  "html-css-class-completion.searchRemoteGlobPattern": "**/*.{svelte,tpl,latte,php,html,twig}",
+  "html-css-class-completion.searchRemoteGlobPattern": "**/*.{svelte,tpl,eex,latte,php,html,twig}",
   ...
 }
 ```
