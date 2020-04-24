@@ -23,6 +23,7 @@ ID Support:
 * Both-way `SCSS` support
 * Separate `class` and `id` support **Work in progress.**
 * Automatically parse all remote stylesheets from HTML, Svelte, Twig, Slim and ERB files. **Not yet released**. See: #49 for prebuild image.
+* HTML, SCSS, SASS, CSS, Elixir, PHP, Vue, Slim, Latte and many more
 
 ## Supported Language Modes
 * HTML
@@ -38,6 +39,7 @@ ID Support:
 * Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=sianglim.slim)]
 * Latte [requires **Latte** extension]
 * Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=JamesBirtles.svelte-vscode)]
+* Elixir HTML (EEx) and HTML (Eex)
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
 * Handlebars
@@ -55,7 +57,7 @@ Both directions (from CSS/SCSS to HTML, Latte... or from HTML, Latte to CSS/SCSS
 We introduced incremental build. In previous versions we had to re-cache all workspace to reflect our atomic changes. This causes high CPU usage and unnecessary delay to our development time. Hence, we introduced this feature. Once you open your VSCode workspace, initial scan will be made and all upcoming changes will be incrementally and instantly reflected to the cache.
 
 ## Contributions
-You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/Zignd/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
+You can request new features and contribute to the extension development on its [repository on GitHub](https://github.com/gencer/HTML-CSS-Class-Completion/issues). Look for an issue you're interested in working on, comment on it to let me know you're working on it and submit your pull request! :D
 
 For SCSS part, I have manually strip comments and do regexp on code. In this way I also able to locate magic methods/classes. For example; If you have `.u-pb-{class}` this extension will show you `.u-pb-` and leave it `class` name filled by you.
 
@@ -94,7 +96,7 @@ Example:
 ```
 {
   ...
-  "html-css-class-completion.searchRemoteGlobPattern": "**/*.{svelte,tpl,latte,php,html,twig}",
+  "html-css-class-completion.searchRemoteGlobPattern": "**/*.{svelte,tpl,eex,latte,php,html,twig}",
   ...
 }
 ```
