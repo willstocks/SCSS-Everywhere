@@ -45,6 +45,13 @@ class Fetcher {
       return [];
     }
 
+    const folder = path.join(os.tmpdir(), "html_css_slim_for_");
+    if (!fs.existsSync(folder)) {
+      fs.mkdirSync(folder);
+    } else {
+      fsExtra.emptyDirSync(folder);
+    }
+
     const configuration = vscode.workspace.getConfiguration();
     const includeGlobPattern = configuration.get(
       "html-css-class-completion.includeGlobPattern"
@@ -59,7 +66,6 @@ class Fetcher {
       "html-css-class-completion.remoteStyleSheets"
     );
 
-    let paths;
     const localFiles = await vscode.workspace.findFiles(
       `${includeGlobPattern}`,
       `${excludeGlobPattern}`
@@ -83,12 +89,6 @@ class Fetcher {
     }
 
     if (remoteStyleSheets.length > 0) {
-      const folder = path.join(os.tmpdir(), "html_css_slim");
-      if (!fs.existsSync(folder)) {
-        fs.mkdirSync(folder);
-      } else {
-        fsExtra.emptyDirSync(folder);
-      }
       for (const remoteFile of remoteStyleSheets) {
         try {
           const filename = this.getFilename(remoteFile);
@@ -119,7 +119,7 @@ class Fetcher {
       }
 
       const relativePattern = new vscode.RelativePattern(folder, "*.css");
-      paths = await vscode.workspace.findFiles(relativePattern);
+      const paths = await vscode.workspace.findFiles(relativePattern);
 
       for (let parsedFile of paths) {
         localFiles[localFiles.length] = parsedFile;

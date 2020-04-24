@@ -1,3 +1,7 @@
+### v1.7.1
+
+* Fix HTML EEx issue on #50.
+
 ### v1.7.0
 
 * Add support for Elixir's Eex and EEx. See #45. You need vscode-elixir extension for this.
@@ -10,7 +14,7 @@
 
 * Add support for dynamic imports See #49.
 
-### v1.5.22
+### v1.5.23
 
 * Fixed #48.
 
