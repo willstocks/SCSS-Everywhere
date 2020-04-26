@@ -45,12 +45,8 @@ class Fetcher {
       return [];
     }
 
-    const folder = path.join(os.tmpdir(), "html_css_slim_for_");
-    if (!fs.existsSync(folder)) {
-      fs.mkdirSync(folder);
-    } else {
-      fsExtra.emptyDirSync(folder);
-    }
+    const prefix = crypto.createHash("md5").update(vscode.workspace.name).digest("hex")
+
 
     const configuration = vscode.workspace.getConfiguration();
     const includeGlobPattern = configuration.get(
@@ -62,33 +58,54 @@ class Fetcher {
     const excludeGlobPattern = configuration.get(
       "html-css-class-completion.excludeGlobPattern"
     );
-    const remoteStyleSheets = configuration.get<Array<string>>(
+    let remoteStyleSheets = configuration.get<Array<string>>(
       "html-css-class-completion.remoteStyleSheets"
     );
+
+    if (!remoteStyleSheets) remoteStyleSheets = []
+
 
     const localFiles = await vscode.workspace.findFiles(
       `${includeGlobPattern}`,
       `${excludeGlobPattern}`
     );
-    const contentFiles = await vscode.workspace.findFiles(
-      `${remoteGlobPattern}`,
-      `${excludeGlobPattern}`
-    );
 
-    for (let parsedFile of contentFiles) {
-      const textDocument = await this.createSimpleTextDocument(parsedFile);
-      const $ = cheerio.load(textDocument.getText());
-      // remoteDynamicStyleSheets.push(remote);
-      $('link[rel=stylesheet]').each((key, item) => {
-        let url: string = item.attribs["href"]
-        if (url.startsWith('//')) {
-          url = url.replace('//', 'https://');
+    if (remoteGlobPattern && remoteGlobPattern !== '') {
+
+      const contentFiles = await vscode.workspace.findFiles(
+        `${remoteGlobPattern}`,
+        `${excludeGlobPattern}`
+      );
+
+      for (let parsedFile of contentFiles) {
+        try {
+          const textDocument = await this.createSimpleTextDocument(parsedFile);
+          const $ = cheerio.load(textDocument.getText());
+          // remoteDynamicStyleSheets.push(remote);
+          $('link[rel=stylesheet]').each((key, item) => {
+            let url: string = item.attribs["href"]
+            if (url.startsWith('//')) {
+              url = url.replace('//', 'https://');
+            }
+            remoteStyleSheets.push(url);
+          })
+        } catch (ex) {
+          console.log("Found an error while processing remote meta link", ex)
+          continue
         }
-        remoteStyleSheets.push(url);
-      })
+      }
     }
 
+    let paths;
     if (remoteStyleSheets.length > 0) {
+
+      const folder = path.join(os.tmpdir(), "html_css_slim", prefix);
+      if (!fs.existsSync(folder)) {
+        fsExtra.ensureDirSync(folder);
+      }
+
+      fsExtra.emptyDirSync(folder);
+
       for (const remoteFile of remoteStyleSheets) {
         try {
           const filename = this.getFilename(remoteFile);
@@ -119,10 +136,10 @@ class Fetcher {
       }
 
       const relativePattern = new vscode.RelativePattern(folder, "*.css");
-      const paths = await vscode.workspace.findFiles(relativePattern);
+      paths = await vscode.workspace.findFiles(relativePattern);
 
       for (let parsedFile of paths) {
-        localFiles[localFiles.length] = parsedFile;
+        localFiles.push(parsedFile)
       }
     }
 
