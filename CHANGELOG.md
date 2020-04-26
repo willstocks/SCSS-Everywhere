@@ -1,3 +1,7 @@
+### v1.7.2
+
+* Fixed unexpected crash on #51.
+
 ### v1.7.1
 
 * Fix HTML EEx issue on #50.
