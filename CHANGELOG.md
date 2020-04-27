@@ -1,3 +1,7 @@
+### v1.7.3 and v1.7.4
+
+* Fixed unexpected crash --again-- on #51.
+
 ### v1.7.2
 
 * Fixed unexpected crash on #51.

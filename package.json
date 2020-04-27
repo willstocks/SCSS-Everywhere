@@ -2,7 +2,7 @@
   "name": "html-slim-scss-css-class-completion",
   "displayName": "SCSS Everywhere",
   "description": ":class and :id completion for HTML, Svelte, Latte, Slim, Elixir, Smarty, PHP, ERB, Javascript, CSS and SCSS. Just declare class in your template or CSS/SCSS and see it in everywhere. (Both directions)",
-  "version": "1.7.2",
+  "version": "1.7.4",
   "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"
@@ -87,6 +87,7 @@
     "@types/bluebird": "^3.5.19",
     "@types/cheerio": "^0.22.17",
     "@types/css": "^0.0.31",
+    "@types/fs-extra": "^8.1.0",
     "@types/htmlparser2": "^3.7.2",
     "@types/lodash": "^4.14.92",
     "@types/mocha": "^2.2.46",
