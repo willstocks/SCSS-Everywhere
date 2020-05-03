@@ -208,7 +208,7 @@ function provideCompletionItemsGenerator(languageSelector: string, classMatchReg
             const rawClasses: RegExpMatchArray = text.match(classMatchRegex);
             const excluded: RegExpMatchArray = text.match(/[\"\(\{]/);
             if (!rawClasses || rawClasses.length === 1 ||
-                (["slim", "haml"].includes(languageSelector) && excluded != null && !text.endsWith("class=\""))) {
+                ((languageSelector === 'haml' || languageSelector === 'slim') && excluded != null && !text.endsWith("class=\""))) {
                 return [];
             }
 
