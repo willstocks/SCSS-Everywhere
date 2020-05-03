@@ -75,7 +75,7 @@
   },
   "icon": "images/icon.png",
   "repository": {
-    "url": "https://github.com/gencer/HTML-Slim-CSS-SCSS-Class-Completion"
+    "url": "https://github.com/gencer/SCSS-Everywhere"
   },
   "main": "./dist/extension",
   "scripts": {
