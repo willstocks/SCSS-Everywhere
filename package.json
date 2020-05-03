@@ -77,6 +77,10 @@
   "repository": {
     "url": "https://github.com/gencer/SCSS-Everywhere"
   },
+  "galleryBanner": {
+    "color": "#AA83C4",
+    "theme": "dark"
+  },
   "main": "./dist/extension",
   "scripts": {
     "vscode:prepublish": "webpack --mode production",
