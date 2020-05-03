@@ -10,6 +10,7 @@ import EexParseEngine from "./types/eex-parse-engine";
 import SvelteParseEngine from "./types/svelte-parse-engine";
 import SmartyParseEngine from "./types/smarty-parse-engine";
 import HeexParseEngine from "./types/heex-parse-engine";
+import HamlParseEngine from "./types/haml-parse-engine";
 
 class ParseEngineRegistry {
     public static getParseEngine(languageId: string): IParseEngine {
@@ -41,6 +42,7 @@ class ParseEngineRegistry {
         new ScssParseEngine(),
         new HtmlParseEngine(),
         new SlimParseEngine(),
+        new HamlParseEngine(),
         new PhpParseEngine(),
     ];
 }
