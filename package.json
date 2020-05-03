@@ -2,7 +2,7 @@
   "name": "html-slim-scss-css-class-completion",
   "displayName": "SCSS Everywhere",
   "description": ":class and :id completion for HTML, Svelte, Latte, Slim, Elixir, Smarty, PHP, ERB, Javascript, CSS and SCSS. Just declare class in your template or CSS/SCSS and see it in everywhere. (Both directions)",
-  "version": "1.7.4",
+  "version": "1.7.5",
   "publisher": "gencer",
   "engines": {
     "vscode": "^1.19.0"
@@ -10,6 +10,7 @@
   "keywords": [
     "html",
     "slim",
+    "haml",
     "scss",
     "css",
     "eex",
@@ -35,7 +36,7 @@
         "properties": {
           "html-css-class-completion.includeGlobPattern": {
             "type": "string",
-            "default": "**/*.{css,scss,sass,eex,slim,svelte,tpl,latte,php,html,twig}",
+            "default": "**/*.{css,scss,sass,eex,slim,haml,svelte,tpl,latte,php,html,twig}",
             "description": "A glob pattern that defines files and folders to search for. The glob pattern will be matched against the paths of resulting matches relative to their workspace."
           },
           "html-css-class-completion.searchRemoteGlobPattern": {

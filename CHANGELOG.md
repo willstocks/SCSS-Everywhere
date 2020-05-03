@@ -1,3 +1,7 @@
+### v1.7.5
+
++ Added HAML support
+
 ### v1.7.3 and v1.7.4
 
 * Fixed unexpected crash --again-- on #51.
