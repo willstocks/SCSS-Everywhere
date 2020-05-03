@@ -19,11 +19,11 @@ ID Support:
 * Command to manually re-cache the class definitions used in the autocompletion
 * User Settings to override which folders and files should be considered or excluded from the caching process
 * Incremental build. You do not need to re-cache everytime.
-* Additional **Slim, Smarty, Eex and Svelte** template support
+* Additional **Slim, Haml, Smarty, Eex and Svelte** template support
 * Both-way `SCSS` support
 * Separate `class` and `id` support **Work in progress.**
 * Automatically parse all remote stylesheets from HTML, Svelte, Twig, Slim and ERB files.
-* HTML, SCSS, SASS, CSS, Elixir, PHP, Vue, Slim, Latte and many more
+* HTML, SCSS, SASS, CSS, Elixir, PHP, Vue, Slim, Haml, Latte and many more
 
 ## Supported Language Modes
 * HTML
@@ -37,6 +37,7 @@ ID Support:
 * Twig
 * Smarty (.tpl)
 * Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=sianglim.slim)]
+* Haml [requires HAML or Better Haml extension]
 * Latte [requires **Latte** extension]
 * Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=JamesBirtles.svelte-vscode)]
 * Elixir HTML (EEx) and HTML (Eex)
@@ -121,7 +122,7 @@ When we include Template files to show usages, IntelliSense can be **very** slow
 
 Emmet support comes disabled by default, the reason behind this choice is because it the current implementation simply triggers completion when you type a "." (period) and this behavior might be considered a little annoying, but it might change in the future.
 
-Currently it supports the following languages (those are [language identifier](https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers)): "html", "eex", "latte", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs", "slim", "typescriptreact", "javascript", "javascriptreact".
+Currently it supports the following languages (those are [language identifier](https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers)): "html", "eex", "latte", "razor", "php", "blade", "vue", "twig", "markdown", "erb", "handlebars", "ejs", "slim", "haml", "typescriptreact", "javascript", "javascriptreact".
 
 * `"html-css-class-completion.enableEmmetSupport"` (default: `false`)
 
