@@ -39,7 +39,7 @@ ID Support:
 * Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=sianglim.slim)]
 * Haml [requires HAML or Better Haml extension]
 * Latte [requires **Latte** extension]
-* Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=JamesBirtles.svelte-vscode)]
+* Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)]
 * Elixir HTML (EEx) and HTML (Eex)
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
