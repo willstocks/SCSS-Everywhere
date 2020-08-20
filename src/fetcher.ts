@@ -45,7 +45,7 @@ class Fetcher {
 
     const prefix = crypto.createHash("md5").update(vscode.workspace.name || 'global').digest("hex")
 
-    console.log("SCSS-EVERYWHERE-DEBUG: ", "PREFIX_SET", prefix)
+    // console.log("SCSS-EVERYWHERE-DEBUG: ", "PREFIX_SET", prefix)
 
     const configuration = vscode.workspace.getConfiguration();
 
@@ -70,21 +70,21 @@ class Fetcher {
       `${excludeGlobPattern}`
     );
 
-    console.log("SCSS-EVERYWHERE-DEBUG: ", "CONFIG_SET", remoteStyleSheets, localFiles)
+    // console.log("SCSS-EVERYWHERE-DEBUG: ", "CONFIG_SET", remoteStyleSheets, localFiles)
 
     if (remoteGlobPattern && remoteGlobPattern !== '') {
-      console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FOUND", remoteGlobPattern)
+      // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FOUND", remoteGlobPattern)
 
       const contentFiles = await vscode.workspace.findFiles(
         `${remoteGlobPattern}`,
         `${excludeGlobPattern}`
       );
 
-      console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FILES", contentFiles)
+      // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FILES", contentFiles)
 
       for (let parsedFile of contentFiles) {
         try {
-          console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FILE:", parsedFile)
+          // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FILE:", parsedFile)
           const textDocument = await this.createSimpleTextDocument(parsedFile);
           const $ = cheerio.load(textDocument.getText());
           // remoteDynamicStyleSheets.push(remote);
@@ -94,7 +94,7 @@ class Fetcher {
               url = url.replace('//', 'https://');
             }
             remoteStyleSheets.push(url);
-            console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FILE_URL:", url)
+            // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_GLOB_PATTERN_FILE_URL:", url)
           })
         } catch (ex) {
           console.log("Found an error while processing remote meta link", ex)
@@ -108,12 +108,12 @@ class Fetcher {
 
       const folder = path.join(os.tmpdir(), "html_css_slim", prefix);
       fsExtra.ensureDirSync(folder);
-      console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_ENSURE:", folder)
+      // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_ENSURE:", folder)
 
       for (const remoteFile of remoteStyleSheets) {
         try {
           const filename = this.getFilename(remoteFile);
-          console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_GET_FILE:", remoteFile, filename)
+          // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_GET_FILE:", remoteFile, filename)
           const url = new URL(remoteFile);
           if (url.protocol === "https:") {
             https.get(
@@ -125,14 +125,14 @@ class Fetcher {
               },
               function (response) {
                 const file = fs.createWriteStream(path.join(folder, filename));
-                console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_GET_FILE_HTTPS_WRITE:", remoteFile, path.join(folder, filename))
+                // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_GET_FILE_HTTPS_WRITE:", remoteFile, path.join(folder, filename))
                 response.pipe(file);
               }
             );
           } else {
             http.get(remoteFile, function (response) {
               const file = fs.createWriteStream(path.join(folder, filename));
-              console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_GET_FILE_HTTP_WRITE:", remoteFile, path.join(folder, filename))
+              // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_GET_FILE_HTTP_WRITE:", remoteFile, path.join(folder, filename))
               response.pipe(file);
             });
 
@@ -147,12 +147,12 @@ class Fetcher {
       paths = await vscode.workspace.findFiles(relativePattern);
 
       for (let parsedFile of paths) {
-        console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_APPEND_FILE:", parsedFile)
+        // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_TMP_FOLDER_APPEND_FILE:", parsedFile)
         localFiles[localFiles.length] = parsedFile;
       }
     }
 
-    console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_AND_LOCAL_FINISH:", localFiles)
+    // console.log("SCSS-EVERYWHERE-DEBUG: ", "REMOTE_AND_LOCAL_FINISH:", localFiles)
     return localFiles;
   }
 
