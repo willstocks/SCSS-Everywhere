@@ -14,4 +14,4 @@ class ReactTsxParseEngine implements IParseEngine {
     }
 }
 
-export default SvelteParseEngine;
+export default ReactTsxParseEngine;

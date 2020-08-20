@@ -14,4 +14,4 @@ class ReactJsxParseEngine implements IParseEngine {
     }
 }
 
-export default SvelteParseEngine;
+export default ReactJsxParseEngine;
