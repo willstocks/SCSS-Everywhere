@@ -1,3 +1,9 @@
+### v1.7.6
+
++ Added TSX/JSX to CSS/SCSS support. Premature support. Please provide feedback on this. #56
++ Comment in debug lines
++ Fix emmet support. #12
+
 ### v1.7.5
 
 + Added HAML support
