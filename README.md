@@ -1,4 +1,16 @@
-# SCSS Everywhere
+<h1 align="center">
+  <br/>
+   SCSS Everywhere
+  <br/>
+  <br/>
+</h1>
+
+<p align="center">
+ <a href="https://marketplace.visualstudio.com/items?itemName=gencer.html-slim-scss-css-class-completion"><img src="https://vsmarketplacebadge.apphb.com/version-short/gencer.html-slim-scss-css-class-completion.svg?style=for-the-badge&colorA=252526&colorB=43A047&label=VERSION" alt="VERSION"></a>&nbsp;
+ <a href="https://marketplace.visualstudio.com/items?itemName=gencer.html-slim-scss-css-class-completion"><img src="https://vsmarketplacebadge.apphb.com/rating-short/gencer.html-slim-scss-css-class-completion.svg?style=for-the-badge&colorA=252526&colorB=43A047&label=Rating" alt="Rating"></a>&nbsp;
+ <a href="https://marketplace.visualstudio.com/items?itemName=gencer.html-slim-scss-css-class-completion"><img src="https://vsmarketplacebadge.apphb.com/installs-short/gencer.html-slim-scss-css-class-completion.svg?style=for-the-badge&colorA=252526&colorB=43A047&label=Installs" alt="Installs"></a>&nbsp;
+ <a href="https://marketplace.visualstudio.com/items?itemName=gencer.html-slim-scss-css-class-completion"><img src="https://vsmarketplacebadge.apphb.com/downloads-short/gencer.html-slim-scss-css-class-completion.svg?style=for-the-badge&colorA=252526&colorB=43A047&label=Downloads" alt="Downloads"></a>&nbsp;
+</p>
 
 > Note: This is **drop-in** replacement for https://github.com/zignd/HTML-CSS-Class-Completion. Please uninstall that extension before installing this. Otherwise, things can happen.
 
@@ -39,7 +51,7 @@ ID Support:
 * Slim [requires [Slim](https://marketplace.visualstudio.com/items?itemName=sianglim.slim)]
 * Haml [requires HAML or Better Haml extension]
 * Latte [requires **Latte** extension]
-* Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=JamesBirtles.svelte-vscode)]
+* Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)]
 * Elixir HTML (EEx) and HTML (Eex)
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
