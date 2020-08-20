@@ -335,6 +335,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
             caching = false;
         }
     }));
+	
+    // Enable Emmet Completion on startup if param is set to true
+    if (workspace.getConfiguration().get<boolean>("html-css-class-completion.enableEmmetSupport")) {
+        enableEmmetSupport(emmetDisposables);
+    }
 
     // Javascript based extensions
     ["typescriptreact", "javascript", "javascriptreact"].forEach((extension) => {
