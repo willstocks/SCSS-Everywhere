@@ -13,6 +13,7 @@ import HeexParseEngine from "./types/heex-parse-engine";
 import HamlParseEngine from "./types/haml-parse-engine";
 import ReactJsxParseEngine from "./types/react-jsx-parse-engine";
 import ReactTsxParseEngine from "./types/react-tsx-parse-engine";
+import LiquidParseEngine from "./types/liquid-parse-engine";
 
 class ParseEngineRegistry {
     public static getParseEngine(languageId: string): IParseEngine {
@@ -45,6 +46,7 @@ class ParseEngineRegistry {
         new HtmlParseEngine(),
         new SlimParseEngine(),
         new HamlParseEngine(),
+        new LiquidParseEngine(),
         new ReactJsxParseEngine(),
         new ReactTsxParseEngine(),
     ];

@@ -1,3 +1,7 @@
+### v1.7.7
+
++ Added Liquid Support. See #59. Please also see README.
+
 ### v1.7.6
 
 + Added TSX/JSX to CSS/SCSS support. Premature support. Please provide feedback on this. #56
