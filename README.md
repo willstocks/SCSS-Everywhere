@@ -52,7 +52,7 @@ ID Support:
 * Haml [requires HAML or Better Haml extension]
 * Latte [requires **Latte** extension]
 * Svelte [requires [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode)]
-* Liquid [requires [Liquid](https://marketplace.visualstudio.com/items?itemName=sissel.shopify-liquid)]
+* Liquid [requires [Liquid](https://marketplace.visualstudio.com/items?itemName=neilding.language-liquid)]
 * Elixir HTML (EEx) and HTML (Eex)
 * Markdown (.md)
 * Embedded Ruby (.html.erb) [requires [rebornix.Ruby](https://marketplace.visualstudio.com/items?itemName=rebornix.Ruby)]
