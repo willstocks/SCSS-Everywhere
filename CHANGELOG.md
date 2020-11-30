@@ -1,3 +1,7 @@
+### v1.7.8
+
++ Add `:class` attr support for vue. See #60.
+  
 ### v1.7.7
 
 + Added Liquid Support. See #59. Please also see README.

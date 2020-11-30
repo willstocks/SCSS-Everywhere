@@ -353,6 +353,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
         context.subscriptions.push(provideCompletionItemsGenerator(extension, /(id)=["|']([^"^']*$)/i, "#"));
     });
 
+    // // Exceptional regex for vue.js
+    ["vue"].forEach((extension) => {
+        context.subscriptions.push(provideCompletionItemsGenerator(extension, /(:class)=["|'].*["|']/i));
+    });
+
     // SLIM based extensions
     ["slim", "haml"].forEach((extension) => {
         // tslint:disable-next-line:max-line-length
